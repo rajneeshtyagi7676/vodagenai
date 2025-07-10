@@ -1,0 +1,3339 @@
+swagger: "2.0"
+info:
+  description: "This API manages Product Inventory resources. The API enables creating\
+    \ a resource in the product inventory.\nThe API also enables retrieving products\
+    \ from the product inventory, including their versions and states, their prices,\
+    \ and related parties.\n###### Compliant with TMF API Specification TMF637-Product\
+    \ Inventory Management-v4.0.0\n
+    ASGW release number - 4.0.0.2"
+  version: 4.0.1
+  title: TMF637 Product Inventory Management
+host: "api.test.asgw.sol-vf.de"
+basePath: /productInventoryManagement/v4
+tags:
+- name: "productInventory"
+- name: "productPromotion"
+- name: "export"
+schemes:
+  - https
+securityDefinitions:
+  Bearer:
+    type: oauth2
+    flow: application
+    tokenUrl: >-
+      https://api.test.asgw.sol-vf.de/oauth2/v1/accesstoken?grant_type=client_credentials
+paths:
+  /productPromotion:
+    get:
+      tags:
+      - "productPromotion"
+      summary: "(Beta) The retrieval of product promotion resources"
+      description: "This operation retrieves product promotion resources.\n**Possible\
+        \ query parameters&#58;**\n- filter query parameter - See the following possible\
+        \ filter options.\n- *promotionId* - List of promotion IDs.\n     Note&#58;\
+        \  *promotionId* query param, cannot be sent together with *id* as filter.\
+        \ An error is thrown.\n- *relatedPartyId* - Customer ID.\n     When sent together\
+        \ with filter by *ID* or by *promotionId* input, only IDs of promotions related\
+        \ to the input customer are returned.\n     When sent together with status,\
+        \ promotions are filtered based on status as well.\n- *status* - Promotion\
+        \ status.\n     When sent together with filter by *ID* or by *promotionId*\
+        \ input, status input is ignored. Can be sent with relatedPartyId\n- *dateFrom*/*dateTo*\
+        \ - Filter by time frame. Promotions are returned when their start date is\
+        \ between the from date and the to date.\n     When this type of filtering\
+        \ is required, both the *dateFrom* and the *dateTo* must be sent as input.\n\
+        \n**Filters (when using the filter query parameter)&#58;**\n- id\n- contractCategory\
+        \       - \nExamples:\n- filter=id==100,101,102\n- filter=contractCategory==contractedOffer\n\
+        \ncontractCategory filter will be ignored if sent with id as filter or promotionId\
+        \ query parameter. It can be sent together with relatedPartyId query parameter.\
+        \ It cannot be sent as filter on its own\n\nNote&#58; The %date% is expected\
+        \ in UTC format yyyy-mm-ddThh:mm:ssZ\nNote&#58; Attribute values and operators\
+        \ MUST be properly URL-encoded\n"
+      operationId: "retrieveProductPromotion"
+      produces:
+      - "application/json;charset=utf-8"
+      parameters:
+      - name: "filter"
+        in: "query"
+        description: "The filter sets criteria for retrieving a subset of resources\
+          \ from a collection, using JSON Path syntax to express the conditions for\
+          \ retrieval. Actual supported filter expressions and operators are detailed\
+          \ in the API operation description.\n\nNotes&#58;\n- Attribute values that\
+          \ represent a Date are expected in UTC format *yyyy-mm-ddThh&#58;mm&#58;ssZ*\n\
+          - Attribute values and operators MUST be properly URL-encoded\n- Encrypted\
+          \ attributes (if any) are supported with Equality (==) operator only\n"
+        required: false
+        type: "string"
+      - name: "status"
+        in: "query"
+        description: "Status of the entity based in its lifecycle\n"
+        required: false
+        type: "string"
+      - name: "dateFrom"
+        in: "query"
+        description: "Entities retrieved from this date onward\n"
+        required: false
+        type: "string"
+        format: "date-time"
+      - name: "dateTo"
+        in: "query"
+        description: "Entities retrieved up to this date  \n"
+        required: false
+        type: "string"
+        format: "date-time"
+      - name: "promotionId"
+        in: "query"
+        description: "List of IDs for the promotions\n"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      - name: "relatedPartyId"
+        in: "query"
+        description: "Related party ID of the customer that has the assigned product\n"
+        required: false
+        type: "string"
+      - name: "offset"
+        in: "query"
+        description: "Requested index for start of page to be provided in the response\
+          \ requested by the client \n"
+        required: false
+        type: "integer"
+      - name: "limit"
+        in: "query"
+        description: "Requested number of resources to be provided in the response\
+          \ requested by the client\n"
+        required: false
+        type: "integer"
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: "*OK* - The product promotion resources are retrieved successfully.\n"
+          headers:
+            X-Total-Count:
+              type: "integer"
+              description: "Total number of items matching criteria"
+            X-Result-Count:
+              type: "integer"
+              description: "Actual number of items returned in the response body"
+            X-Pagination-Total-Pages:
+              type: "integer"
+              description: "The total number of pages to be expected"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ProductPromotion"
+            minItems: 0
+        "400":
+          description: "*Bad Request* - The server cannot process the request due\
+            \ to a malformed\nsyntax. The response can be caused by missing mandatory\
+            \ query\nparameters, invalid value in the query parameters, validation\n\
+            exceptions, and so on.\n"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
+          description: "*Not Found* - The server did not find anything matching the\
+            \ request URI.\nThe response can be caused by missing path parameters,\
+            \ invalid WEB\nresource, and so on.\n"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "409":
+          description: "*Conflict* - The server cannot complete the request due to\
+            \ a conflict\nwith the current state of the resource.\n"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "*Internal Server Error* - The server encountered an unexpected\
+            \ condition\nthat prevented it from fulfilling the request.\n"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "502":
+          description: "*Bad Gateway* - The server encountered an unexpected condition\
+            \ when\ncalling another service.\n"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "503":
+          description: "*Internal Server Error* - The server cannot fulfill the request\
+            \ due to a temporary overloading or maintenance of the server. Retry later.\n"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      x-amdocs:
+        public-roles:
+        - "D1_ProductInventoryManagement_retrieveProductPromotion"
+  /product:
+    get:
+      tags:
+      - "productInventory"
+      summary: "(Beta) The operation to list or locate product entities"
+      description: "This operation lists or locates product entities.\n###### TMF\
+        \ Open API compliant\n      \n**Filter&#58;** \n- id\n- rootProductId\n- primaryProductId\n\
+        - status\n- relatedPartyId (or relatedParty.Id) & relatedParty.role & relatedParty.referredType\n\
+        - externalIdentifier.id & externalIdentifier.type\n- productOffering.type\n\
+        - productOffering.productOfferingTypeId\n- productOffering.productOfferingTypeGroup\n\
+        - productOfferingRef.Id\n- productOffering.productOfferingClassification\n\
+        - productSpecification.id\n- productSpecification.productSpecificationType\n\
+        - productSpecification.productSpecificationTypeId\n- productOrderItem.productOrderId\n\
+        - productOrderItem.productOrderItemId\n- startDate\n- terminationDate\n- contractCategory\n\
+        - characteristic.name & characteristic.value\n- productRelationship.relationshipType\
+        \ & productRelationship.productId & productRelationship.primaryProductId &\
+        \ productRelationship.product.rootProductId\n- productPrice.id\n- productPrice.type\n\
+        - productBillingAccount.id\n- placeRef.id & placeRef.name\n- productPromotion.name\n\
+        \      \n      \nThe characteristic filter searches for characteristics under\
+        \ *product.characteristic* and under *product.productOfferingCharacteristic*.\n\
+        \nWhen only product ids are sent as filter (with no additional parameters),\
+        \ the products with these Ids will be returned regardless of their status.\n\
+        \nWhen rootProductId is sent together with id, products will be returned based\
+        \ on input Id only.\n\nWhen additional filter parameters are sent as input,\
+        \ but no status is indicated, then by default terminated and pendingTerminate\
+        \ products will be filtered out.\n\nBy default contracted offer products (with\
+        \ contractCateogry=contractedOffer) will be filtered out, with the following\
+        \ exception: *id* or *rootProductI*d are sent as filter parameters.\n\nExamples&#58;\n\
+        - filter=id==100,101,102\n- filter=relatedPartyId==200 &nbsp; or &nbsp; filter=relatedParty.Id==200\n\
+        - filter=relatedPartyId==200&status==Active &nbsp; or &nbsp; filter=relatedParty.Id==200&status==Active\n\
+        - filter=externalIdentifier.type==abc&externalIdentifier.id==123,456\n   \
+        \   \nNote&#58; Enter the %date% in UTC format *yyyy-mm-ddThh:mm:ssZ*.\nNote&#58;\
+        \ Attribute values and operators must be properly URL-encoded.\n\n**Returning\
+        \ Terminated Products**\n*returnTerminated* mask must be sent as input in\
+        \ order for terminated products to be returned. Sending *status* as filter\
+        \ can be used to retrieve terminated proudcts in addition to other product\
+        \ statuses.\n\n**Returning Total Count**\nretrunTotalCount should be set to\
+        \ 'true' in the following cases:\n- when population exceeds 10K and 'after'\
+        \ pattern is used and the consumer would like to get the population total\
+        \ number. \n- when rootProductId only is sent as filter and the consumer would\
+        \ like to get the population total number.\n\nIn these cases by default total\
+        \ number of products will not be returned.\nrecommended  to be used on once,\
+        \ in first call.\nIn other cases for small population total count is returned\
+        \ by default.\n\n**Tax Calculation&#58;**\ncalculateTax parameter is used\
+        \ to determine of tax calculation should be performed as part of the price\
+        \ calculation\n - Default is \"true\", meaning tax will be calculated when\
+        \ price is calculated.\n - Must be sent together with calculatePrice parameter.\n\
+        \ \n**Reference Values&#58;**\n- calculateTax (configuration price.calculateTax)\n\
+        - avoiding from filtering out contracted offer products in case specific filter\
+        \ parameters are sent (configuration filterParamsToIncludeContractedOffers)\n"
+      operationId: "retrieveProducts"
+      produces:
+      - "application/json;charset=utf-8"
+      parameters:
+      - name: "Accept-Language"
+        in: "header"
+        description: "Locale of the client\n"
+        required: false
+        type: "string"
+      - name: "filter"
+        in: "query"
+        description: "The filter sets criteria for retrieving a subset of resources\
+          \ from a collection, using JSON Path syntax to express the conditions for\
+          \ retrieval. Actual supported filter expressions and operators are detailed\
+          \ in the API operation description.\n\nNotes&#58;\n- Attribute values that\
+          \ represent a Date are expected in UTC format *yyyy-mm-ddThh&#58;mm&#58;ssZ*\n\
+          - Attribute values and operators MUST be properly URL-encoded\n- Encrypted\
+          \ attributes (if any) are supported with Equality (==) operator only\n"
+        required: false
+        type: "string"
+      - name: "replacableProductOfferingId"
+        in: "query"
+        description: "Catalog product offering ID used to retrieve products from the\
+          \ product inventory that can be used as products for replacement \n"
+        required: false
+        type: "string"
+      - name: "productEnabledByProductId"
+        in: "query"
+        description: "List of primary products. The operation searches all dependent\
+          \ products by the primary product ID of the enabling products.\nThe operation\
+          \ returns a list of primary products that contains the dependent products.\n\
+          A dependent product is a product with the *enable by* relationship to an\
+          \ enabling product.\n"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      - name: "offset"
+        in: "query"
+        description: "Requested index for start of page to be provided in the response\
+          \ requested by the client \n"
+        required: false
+        type: "integer"
+      - name: "limit"
+        in: "query"
+        description: "Requested number of resources to be provided in the response\
+          \ requested by the client\n"
+        required: false
+        type: "integer"
+      - name: "after"
+        in: "query"
+        description: "An opaque string value representing the page results after the\
+          \ cursor value. Used for pagination of large population of above 10K.\n\
+          Must be sent together with searchAfterStrategy parameter\nWhen provided\
+          \ together with offset, offset will be ignored.\n"
+        required: false
+        type: "string"
+      - name: "searchAfterStrategy"
+        in: "query"
+        description: "Indicates whether cursor based pagination is about to be used,\
+          \ by the consumer. When set to 'true', default sort will be added to the\
+          \ search queries .This parameter should be used for pagination of large\
+          \ population of above 10K.\nwhen sent togehter with offset, then sorting\
+          \ and pagination will start from the provided offset.\n"
+        required: false
+        type: "boolean"
+        default: false
+      - name: "calculatePrice"
+        in: "query"
+        description: "Indicates whether the product or products prices must be re-calculated\
+          \ by calling the Price Calculation subdomain.\n"
+        required: false
+        type: "boolean"
+        default: false
+      - name: "calculateTax"
+        in: "query"
+        description: "Indicates whether the tax should be calculated\n"
+        required: false
+        type: "boolean"
+      - name: "mask"
+        in: "query"
+        description: "Set of flags that impact the returned fields.\nThe supported\
+          \ values are&#58;\n- *returnNote* - Once set, notes associated with the\
+          \ product are returned.\n   If a specific *noteType* is required, this type\
+          \ must be specified in the mask.\n<i>Example&#58; mask=returnNote</i>\n\
+          - *returnCatalogMetadata* - Once set, product characteristics are returned\
+          \ based on the characteristics metadata metatype sent.\n   If not sent,\
+          \ all characteristics are returned.\n<i>Example&#58; mask= <metatype1\\\
+          >, \\<metatype2></i>\n- *returnTerminated* - Once set, include terminated\
+          \ products.\n   If *returnInnerTerminated* configuration is set to *true*,\
+          \ the inner terminated products adhere to the mask as well.\n<i>Example&#58;\
+          \ mask=returnTerminated</i>\n"
+        required: false
+        type: "string"
+      - name: "returnTotalCount"
+        in: "query"
+        description: "Retun the exact total count. Used for large populations of above\
+          \ 10K items.\n"
+        required: false
+        type: "boolean"
+        default: false
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: "*OK* - The product is retrieved successfully.\n"
+          headers:
+            X-Total-Count:
+              type: "integer"
+              description: "Total number of items matching criteria"
+            X-Result-Count:
+              type: "integer"
+              description: "Actual number of items returned in the response body"
+            X-Pagination-Total-Pages:
+              type: "integer"
+              description: "The total number of pages to be expected"
+            X-after:
+              type: "string"
+              description: "An opaque string value representing the page results after\
+                \ the cursor value. Should be sent by the consumer when next page\
+                \ is requested. Used for large population queries\n"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+            minItems: 0
+        "400":
+          description: "*Bad Request* - The server cannot process the request due\
+            \ to a malformed syntax. The response can be caused by missing mandatory\
+            \ query parameters, invalid value in the query parameters, validation\
+            \ exceptions, and so on.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "404":
+          description: "*Not Found* - The server did not find anything matching the\
+            \ request URI. The response can be caused by missing path parameters,\
+            \ invalid web resource, and so on.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "409":
+          description: "*Conflict* - The server cannot complete the request due to\
+            \ a conflict with the current state of the resource.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "500":
+          description: "*Internal Server Error* - The server encountered an unexpected\
+            \ condition that prevented it from fulfilling the request.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "502":
+          description: "*Bad Gateway* - The server encountered an unexpected condition\
+            \ when calling another service.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "503":
+          description: "*Internal Server Error* - The server cannot fulfill the request\
+            \ due to a temporary overloading or maintenance of the server. Retry later.\n"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      x-amdocs:
+        public-roles:
+        - "D1_ProductInventoryManagement_retrieveProducts"
+    post:
+      tags:
+      - "productInventory"
+      summary: "The request to create a single product in the product inventory"
+      description: "This operation creates a single product.\n###### TMF Open API\
+        \ compliant\n**Mandatory&#58;**\n- Product.rootProductId - The root product\
+        \ in the product tree.\n- Product.productOrder\n- Product.productOffering\
+        \ or Product.productSpecification - Select one of the fields.\n- Product.relatedParty\
+        \ (role = Customer). The field is not mandatory for prepaid customers.\n\n\
+        **Readonly&#58;**\n- Product.metadata\n- Product.productOrder\n\n**Business\
+        \ rules&#58;**\n- modifyReason - The action must match the order item action.\n\
+        - relatedParty - Not more than one related party with role = *Customer* and\
+        \ the customer status is *active*.\n- billingAccount - The account must be\
+        \ associated with the same customer.\n\n**Reference values&#58;**\n- channel\
+        \ (ApplicationContext)\n- relatedParty.role = Customer (Configuration relatedParty.\
+        \ customerRole)\n"
+      operationId: "createSingleProduct"
+      consumes:
+      - "application/json;charset=utf-8"
+      produces:
+      - "application/json;charset=utf-8"
+      parameters:
+      - name: "Accept-Language"
+        in: "header"
+        description: "Locale of the client\n"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "product"
+        description: "Single product in the product inventory\n"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      security:
+        - Bearer: []      
+      responses:
+        201:
+          description: "*Created* - The product is created successfully\n"
+          schema:
+            $ref: "#/definitions/Product"
+        400:
+          description: "*Bad Request* - The server cannot process the request due\
+            \ to a malformed syntax. The response can be caused by missing mandatory\
+            \ query parameters, invalid value in the query parameters, validation\
+            \ exceptions, and so on.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "*Conflict* - The server cannot complete the request due to\
+            \ a conflict with the current state of the resource.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "*Internal Server Error* - The server encountered an unexpected\
+            \ condition that prevented it from fulfilling the request.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        502:
+          description: "*Bad Gateway* - The server encountered an unexpected condition\
+            \ when calling another service.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        503:
+          description: "*Service Unavailable* - The server cannot fulfill the request\
+            \ due to a temporary overloading or maintenance of the server. Retry later.\n"
+          schema:
+            $ref: "#/definitions/Error"
+      x-dox-Microservice: "pi-product-ms"
+      x-amdocs:
+        route-service: "pi-product-service"
+        public-roles:
+        - "D1_ProductInventoryManagement_createProduct"
+        private-roles:
+        - "D1P_ProductInventoryManagement_write"
+        - "FndP_APIGateway_gw"
+  /product/{productId}/version:
+    get:
+      tags:
+      - "productInventory"
+      summary: "(Beta) The retrieval of all existing versions of a specific product"
+      description: "This operation retrieves the versions of a specific product.\n\
+        When *dateFrom* and/or *dateTo* parameters are provided, only product versions\
+        \ relevant to these dates are returned.\nWhen no date is provided, all product\
+        \ versions are returned.\n"
+      operationId: "retrieveProductVersions"
+      consumes:
+      - "application/json;charset=utf-8"
+      produces:
+      - "application/json;charset=utf-8"
+      parameters:
+      - name: "dateFrom"
+        in: "query"
+        description: "Entities retrieved from this date onward\n"
+        required: false
+        type: "string"
+        format: "date-time"
+      - name: "dateTo"
+        in: "query"
+        description: "Entities retrieved up to this date  \n"
+        required: false
+        type: "string"
+        format: "date-time"
+      - name: "offset"
+        in: "query"
+        description: "Requested index for start of page to be provided in the response\
+          \ requested by the client \n"
+        required: false
+        type: "integer"
+      - name: "limit"
+        in: "query"
+        description: "Requested number of resources to be provided in the response\
+          \ requested by the client\n"
+        required: false
+        type: "integer"
+      - name: "Accept-Language"
+        in: "header"
+        description: "Locale of the client\n"
+        required: false
+        type: "string"
+      - name: "mask"
+        in: "query"
+        description: "Set of flags that impact the returned fields.\nThe supported\
+          \ values are&#58;\n- *returnNote* - Once set, notes associated with the\
+          \ product are returned.\n   If a specific *noteType* is required, this type\
+          \ must be specified in the mask.\n<i>Example&#58; mask=returnNote</i>\n\
+          - *returnCatalogMetadata* - Once set, product characteristics are returned\
+          \ based on the characteristics metadata metatype sent.\n   If not sent,\
+          \ all characteristics are returned.\n<i>Example&#58; mask= <metatype1\\\
+          >, \\<metatype2></i>\n- *returnTerminated* - Once set, include terminated\
+          \ products.\n   If *returnInnerTerminated* configuration is set to *true*,\
+          \ the inner terminated products adhere to the mask as well.\n<i>Example&#58;\
+          \ mask=returnTerminated</i>\n"
+        required: false
+        type: "string"
+      - name: "productId"
+        in: "path"
+        description: "Primary product ID\n"
+        required: true
+        type: "string"
+      security:
+        - Bearer: []      
+      responses:
+        200:
+          description: "*OK* - The product versions are retrieved successfully.\n"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+            minItems: 0
+        400:
+          description: "*Bad Request* - The server cannot process the request due\
+            \ to a malformed syntax. The response can be caused by missing mandatory\
+            \ query parameters, invalid value in the query parameters, validation\
+            \ exceptions, and so on.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "*Not Found* - The server did not find anything matching the\
+            \ request URI. The response can be caused by missing path parameters,\
+            \ invalid web resource, and so on.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "*Conflict* - The server cannot complete the request due to\
+            \ a conflict with the current state of the resource.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "*Internal Server Error* - The server encountered an unexpected\
+            \ condition that prevented it from fulfilling the request.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        502:
+          description: "*Bad Gateway* - The server encountered an unexpected condition\
+            \ when calling another service.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        503:
+          description: "*Service Unavailable* - The server cannot fulfill the request\
+            \ due to a temporary overloading or maintenance of the server. Retry later.\n"
+          schema:
+            $ref: "#/definitions/Error"
+      x-amdocs:
+        route-service: "pi-product-service"
+        public-roles:
+        - "D1_ProductInventoryManagement_retrieveProducts"
+        private-roles:
+        - "D1P_ProductInventoryManagement_read"
+        - "FndP_APIGateway_gw"
+      x-dox-Microservice: "pi-product-ms"
+  /exportResource:
+    post:
+      tags:
+      - "export"
+      summary: "(Beta) The initiation of an export job"
+      description: "This operation provides the capability to run a predefined export\
+        \ job from the product inventory.\nThe export request must provide the basic\
+        \ information to export the required data&#58;\n- *exportTopicName* - export\
+        \ Kafka topic name\n- *Which export operation to initiate?*. \n  Possible\
+        \ Export jobs:\n  - Export products latest version. Product resources are\
+        \ being exported. In a single job, data of latest version is exported (jobDefinitionId=pi-product-export-v4).\n\
+        \  - Export products older versions. Product resources are being exported.\
+        \ In a single job, older versions data is exported (jobDefinitionId=pi-product-previous-export-v4).\n\
+        \  - Export product promotions (jobDefinitionId=pi-product-promotion-export-v4)\n\
+        - *Product Parameters*\n  - *startDate* - start looking for products created\
+        \ from this date on.\n    The *startDate* input field provides the date from\
+        \ which to do the export. Date logic is peformed based on the Couchbase document\
+        \ creation date.\n  - *endDate* - Search for products created until this date.\n\
+        \    The *endDate* input field provides the last date to export by. Date logic\
+        \ is peformed based on the Couchbase document creation date.\nNote&#58; For\
+        \ exporting ALL products - The API needs to be used twice, once for latest\
+        \ versions and once for old versions. \nDeprecated since full export will\
+        \ be done via mass framework from now on.\n"
+      operationId: "exportResource"
+      consumes:
+      - "application/json;charset=utf-8"
+      produces:
+      - "application/json;charset=utf-8"
+      parameters:
+      - in: "body"
+        name: "ExportJobDefinition"
+        description: "Relevant export job to run\n"
+        required: true
+        schema:
+          $ref: "#/definitions/ExportJobDefinitionRequest"
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: "*OK* - The export job is initiated successfully. \n"
+          schema:
+            $ref: "#/definitions/ExportJobDefinitionOutput"
+        "400":
+          description: "*Bad Request* - The server cannot process the request due\
+            \ to a malformed syntax. The response can be caused by missing mandatory\
+            \ query parameters, invalid value in the query parameters, validation\
+            \ exceptions, and so on.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "404":
+          description: "*Not Found* - The server did not find anything matching the\
+            \ request URI. The response can be caused by missing path parameters,\
+            \ invalid web resource, and so on.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "409":
+          description: "*Conflict* - The server cannot complete the request due to\
+            \ a conflict with the current state of the resource.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "412":
+          description: "*Unprocessable Entity* - The server understands the content\
+            \ type of the request entity, and the syntax of the request entity is\
+            \ correct, but was unable to process the contained instructions.\n"
+          schema:
+            $ref: "#/definitions/ValidationError"
+        "500":
+          description: "*Internal Server Error* - The server encountered an unexpected\
+            \ condition that prevented it from fulfilling the request.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        "502":
+          description: "*Bad Gateway* - The server encountered an unexpected condition\
+            \ when calling another service.\n"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: "*Internal Server Error* - The server encountered an unexpected\
+            \ condition that prevented it from fulfilling the request.\n"
+          schema:
+            $ref: "#/definitions/Error"
+      x-amdocs:
+        public-roles:
+        - "D1_ProductInventory_export"
+  /product/{productId}/calculateNextPossibleTerminationDate:
+    post:
+      tags:
+        - productInventoryManagementCust
+      summary: Request to calculate the next possible termination date of a customer's subscription
+      description: |
+        This service calculates the next possible termination date of a customer's subscription
+      operationId: calculateNextPossibleTerminationDate
+      consumes:
+        - application/json;charset=utf-8
+      produces:
+        - application/json;charset=utf-8
+      parameters:
+        - name: productId
+          in: path
+          description: |
+            The ID of the product
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: |
+            The locale of the client
+          required: false
+          type: string
+        - in: body
+          name: calculationStartDate
+          description: |
+            The date when the customers letter/request for termination was received.
+            This is not mandatory, if it is not passed, current date is assumed to be the date.
+          required: false
+          schema:
+            $ref: '#/definitions/calculationStartDate'
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: |
+            *OK* - The next possible termination date for the product was calculated successfully.
+          schema:
+            $ref: '#/definitions/calculatedTerminationDate'
+        400:
+          description: |
+            *Bad Request* - The server cannot process the request due to a malformed
+            syntax. The response can be caused by missing mandatory query
+            parameters, invalid value in the query parameters, validation
+            exceptions, and so on.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: |
+            *Not Found* - The server did not find anything matching the request URI.
+            The response can be caused by missing path parameters, invalid WEB
+            resource, and so on.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        409:
+          description: |
+            *Conflict* - The server cannot complete the request due to a conflict
+            with the current state of the resource.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: |
+            *Internal Server Error* - The server encountered an unexpected condition
+            that prevented it from fulfilling the request.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        502:
+          description: |
+            *Bad Gateway* - The server encountered an unexpected condition when
+            calling another service.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        503:
+          description: |
+            *Internal Server Error* - The server cannot fulfill the request due to a temporary overloading or maintenance of the server. Retry later.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-amdocs:
+        route-service: pi-managementcust-service
+        public-roles:
+          - D1_ProductInventoryManagement_calcTerminationDate
+        private-roles:
+          - D1P_ProductInventoryManagement_write
+          - FndP_APIGateway_gw
+      x-dox-Microservice: pi-managementcust-ms
+definitions:
+  Product:
+    allOf:
+    - type: "object"
+      properties:
+        description:
+          type: "string"
+          description: "Description of the product\n"
+        id:
+          type: "string"
+          description: "Unique ID of the product that identifies a specific resource\n"
+        href:
+          type: "string"
+          description: "Hypertext reference to the self-reference to the product\n"
+        isBundle:
+          type: "boolean"
+          description: "Indicates whether the product represents a bundle.\n"
+        isCustomerVisible:
+          type: "boolean"
+          description: "Indicates whether a related party can view the product.\n"
+        name:
+          type: "string"
+          description: "Name of the product. It could be the same as the name of the\
+            \ product offering.     \n"
+        orderDate:
+          type: "string"
+          format: "date-time"
+          description: "Date on which the order was created\n"
+        productSerialNumber:
+          type: "string"
+          description: "Serial number of the product\n"
+        startDate:
+          type: "string"
+          format: "date-time"
+          description: "Date time on which the product has been created such as the\
+            \ current version.\n"
+        status:
+          type: "string"
+          description: "Lifecycle status of the product\n"
+        statusChangeReason:
+          type: "array"
+          description: "Reason name of the last product status change\n"
+          items:
+            $ref: "#/definitions/StatusReason"
+        statusChangeDate:
+          type: "string"
+          format: "date-time"
+          description: "Date time on which the product status has been changed\n"
+        previousStatus:
+          type: "string"
+          description: "status of the product before it was changed\n"
+        previousStatusChangeReason:
+          type: "array"
+          description: "Reason name of the product status before it was changed\n"
+          items:
+            $ref: "#/definitions/StatusReason"
+        terminationDate:
+          type: "string"
+          format: "date-time"
+          description: "Date time when the termination action was performed on the\
+            \ product\n"
+        version:
+          type: "string"
+          description: "Version of the internal product, each change will create a\
+            \ new version (except change in dates and status)\n"
+        versionObsolete:
+          type: "boolean"
+          description: "Indicates whether this product version is obsolete\n"
+        rootProductId:
+          type: "string"
+          description: "Product ID of the root product in the product tree, represents\
+            \ the top product offer\n"
+        rootProductOfferingId:
+          type: "string"
+          description: "Catalog ID of the root product offering in the product tree\n"
+        pathToRoot:
+          type: "string"
+          description: "Comma-separated list of products that constitute the product\
+            \ tree\n"
+        parentId:
+          type: "string"
+          description: "Product ID of the parent product order in the product tree\n"
+        quantity:
+          type: "integer"
+          description: "Quantity of the products referring to non-serialized products\
+            \ that are a part of an order\n"
+        activationDate:
+          type: "string"
+          format: "date-time"
+          description: "Date when the product is set to active.\nAmdocs Order Management\
+            \ updates this field either on completion of the order or directly in\
+            \ the product inventory.\n"
+        primaryProductId:
+          type: "string"
+          description: "ID of the primary product. The primary product is the first\
+            \ ancestor that is the business product offering.\nNote that it is marked\
+            \ in Amdocs Catalog as *primary*.\n"
+        contractCategory:
+          type: "string"
+          description: "Defined the category of the product which is related to a\
+            \ contract. Possible values:\n  * contractedOffer - the product represents\
+            \ the signed product template under a specific contract\n  * contractedOfferInstance\
+            \ - a product instance related to a certain use as a part of a signed\
+            \ contract\n  * null - means the product is not related to any contract\n"
+        relatedParty:
+          type: "array"
+          description: "Party associated with the product. The party has a role that\
+            \ determines its relation to the product as either a *customer* or a *user*.\n"
+          items:
+            $ref: "#/definitions/RelatedPartyCommerce"
+        productCharacteristic:
+          type: "array"
+          description: "List of product specification characteristics. Characteristics\
+            \ of the product to instantiate or to modify.\n"
+          items:
+            $ref: "#/definitions/Characteristic"
+        productOfferingCharacteristic:
+          type: "array"
+          description: "List of product offer characteristics. Characteristics of\
+            \ the product to instantiate or to modify.\n"
+          items:
+            $ref: "#/definitions/Characteristic"
+        note:
+          type: "array"
+          description: "Extra information about the product order\n"
+          items:
+            $ref: "#/definitions/Note"
+        product:
+          type: "array"
+          description: "Relation between the product and its product specification\
+            \ for a product in the product inventory on the same document\n"
+          items:
+            $ref: "#/definitions/Product"
+        productRelationship:
+          type: "array"
+          description: "List of product relationships (ProductRelationship [*])\n\
+            Represents a relationship between products - potentially holds an entire\
+            \ product object or a product reference.\n"
+          items:
+            $ref: "#/definitions/ProductRelationship"
+        productPrice:
+          type: "array"
+          description: "List of product prices. An amount, usually of money, that\
+            \ represents the actual price paid by\na customer for a purchase, a rental,\
+            \ or a lease of a product.\nThe price is valid for a defined period of\
+            \ time.\n"
+          items:
+            $ref: "#/definitions/ProductPrice"
+        productPricePerUnit:
+          type: "array"
+          description: "The total price per unit price of the order item\n"
+          items:
+            $ref: "#/definitions/ProductPrice"
+        productTotalPrice:
+          type: "array"
+          description: "The total price to be paid according to the price calculation\
+            \ done in ordering time\n"
+          items:
+            $ref: "#/definitions/ProductPrice"
+        place:
+          type: "array"
+          description: "List of useful locations for the product\n"
+          items:
+            $ref: "#/definitions/RelatedPlaceRefOrValue"
+        billingAccount:
+          $ref: "#/definitions/BillingAccountRef"
+        productOffering:
+          $ref: "#/definitions/ProductOfferingRef"
+        productSpecification:
+          $ref: "#/definitions/ProductSpecificationRef"
+        externalIdentifier:
+          type: "array"
+          description: "ID of the external system that initiated the creation of the\
+            \ product document\n"
+          items:
+            $ref: "#/definitions/ExternalIdentifier"
+        channel:
+          type: "array"
+          description: "List of channels in the product order\n"
+          items:
+            $ref: "#/definitions/RelatedChannel"
+        productOrderItem:
+          $ref: "#/definitions/RelatedProductOrderItem"
+        productTerm:
+          type: "array"
+          description: "List of terms in the product order\n"
+          items:
+            $ref: "#/definitions/ProductTerm"
+        metadata:
+          type: "array"
+          description: "Characteristics of the product\n"
+          items:
+            $ref: "#/definitions/Metadata"
+        productPromotion:
+          type: "array"
+          description: "List of promotions to which the product is related\n"
+          items:
+            $ref: "#/definitions/ProductPromotionRef"
+        highVolumeProductPromotion:
+          type: "array"
+          description: "A reference to the High Volume Product Promotions to which\
+            \ the product is related.\nNOT IMPLEMETED YET\n"
+          items:
+            $ref: "#/definitions/HighVolumeProductPromotionRef"
+        nextAction:
+          type: "array"
+          description: "Next action to be performed on the product\n"
+          items:
+            $ref: "#/definitions/NextAction"
+        businessActivity:
+          type: "array"
+          description: "Business activity that includes dates that are used by other\
+            \ system like billing, fulfillment, and so on\n"
+          items:
+            $ref: "#/definitions/BusinessActivity"
+        attachment:
+          type: "array"
+          description: "Attachment linked to a product order\n"
+          items:
+            $ref: "#/definitions/AttachmentRef"
+        agreement:
+          type: "array"
+          description: "Agreement Item linked to a product order\n"
+          items:
+            $ref: "#/definitions/AgreementItemRef"
+        message:
+          type: "array"
+          items:
+            $ref: "#/definitions/Message"
+        creationDate:
+          type: "string"
+          format: "date-time"
+          description: "Date and time when the entity was created.\n"
+          readOnly: true
+        lastUpdate:
+          type: "string"
+          format: "date-time"
+          description: "Date and time when the entity was last updated.\n"
+        extensions:
+          type: "object"
+          additionalProperties:
+            type: "object"
+            properties: {}
+          x-amdocs:
+            refDefinition: "Productextensions"
+    - $ref: "#/definitions/Extensible"
+    description: "Product represents the subscription of a product offering or product\
+      \ specification by a party playing a party role,\n such as a Customer. \n"
+  StatusReason:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name of the modification reason\n"
+      date:
+        type: "string"
+        format: "date-time"
+        description: "Date time when the reason was applied\n"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "StatusReasonExtensions"
+    description: "The modification reason associated with the status of the product\n"
+  RelatedPartyCommerce:
+    allOf:
+    - $ref: "#/definitions/RelatedParty"
+    - type: "object"
+      properties:
+        role:
+          type: "string"
+          example: "Customer"
+          description: "Role played by the related party"
+    description: "Party or party role that is linked to a specific entity.\n"
+  RelatedParty:
+    allOf:
+    - type: "object"
+      required:
+      - "@referredType"
+      properties:
+        role:
+          type: "string"
+          description: "Role played by the related party"
+        name:
+          type: "string"
+          description: "Name of the related entity."
+          x-amdocs:
+            protected-data:
+              pii: "nameInfo:name"
+        '@referredType':
+          type: "string"
+          example: ""
+          description: "The actual type of the target instance when needed for disambiguation."
+    - $ref: "#/definitions/EntityRef"
+    description: "Related Entity reference. A related party defines party or party\
+      \ role linked to a specific entity.\n"
+  EntityRef:
+    allOf:
+    - type: "object"
+      required:
+      - "id"
+      properties:
+        id:
+          type: "string"
+          example: "12345"
+          description: "unique identifier"
+        href:
+          type: "string"
+          description: "Hyperlink reference"
+        name:
+          type: "string"
+          description: "Name of the related entity."
+        '@referredType':
+          type: "string"
+          description: "The actual type of the target instance when needed for disambiguation."
+    - $ref: "#/definitions/Extensible"
+    description: "Entity reference schema to be use for all entityRef class."
+  Extensible:
+    type: "object"
+    properties:
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name\n"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class\n"
+    description: "Base entity schema for use in TMForum Open-APIs\n"
+  Characteristic:
+    allOf:
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+          description: "Name of the product characteristic\n"
+        value:
+          type: "string"
+          description: "Value of the product characteristic\n"
+        valueType:
+          type: "string"
+          description: "Value type of the product characteristic\n"
+        characteristicMetadata:
+          type: "array"
+          description: "Characteristics of the product\n"
+          items:
+            $ref: "#/definitions/Metadata"
+        valueMetadata:
+          type: "array"
+          description: "Metadata of the product characteristic value\n"
+          items:
+            $ref: "#/definitions/ValueMetadata"
+        extensions:
+          type: "object"
+          additionalProperties:
+            type: "object"
+            properties: {}
+            x-amdocs:
+              refDefinition: "ProductCharacteristicsextensions"
+    - $ref: "#/definitions/Extensible"
+    description: "The characteristic of the product and the value that is currently\
+      \ selected\n"
+  Metadata:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name of the metadata\n"
+      value:
+        type: "string"
+        description: "Value of the metadata\n"
+      metadataType:
+        type: "string"
+        description: "Type of the metadata\n"
+    description: "Data providing information about one or more aspects of the sub-resource\
+      \ part it is associated with\n"
+  ValueMetadata:
+    allOf:
+    - $ref: "#/definitions/Metadata"
+    - type: "object"
+      properties:
+        sourceValue:
+          type: "string"
+          description: "Value of the metadata source\n"
+    description: "Catalog and operational metadata\n"
+  Note:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Identifier of the note\n"
+          readOnly: true
+    - $ref: "#/definitions/BaseNote"
+    description: "Extra information about a given entity\n"
+  BaseNote:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Identifier of the note\n"
+        noteType:
+          type: "string"
+          description: "Type of the note\n"
+        text:
+          type: "string"
+          example: "Lorem ipsum dolor sit amet"
+          description: "Text of the note\n"
+        date:
+          type: "string"
+          format: "date-time"
+          description: "Date of the note\n"
+    - $ref: "#/definitions/Extensible"
+    description: "base definition\n"
+  ProductRelationship:
+    allOf:
+    - type: "object"
+      properties:
+        relationshipType:
+          type: "string"
+          description: "Type of relation to product such as *businessRelation*, *bundle*,\
+            \ *composite*, or *enabledBy*\n"
+        relationshipSubType:
+          type: "string"
+          description: "Sub type of relation product\n"
+        product:
+          $ref: "#/definitions/ProductRef"
+    - $ref: "#/definitions/Extensible"
+    description: "The relationship to the product\n"
+  ProductRef:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Unique identifier of the product\n"
+        version:
+          type: "string"
+          description: "Version of the product. Populated only in case of specific\
+            \ product queries.\n"
+        href:
+          type: "string"
+          description: "Hypertext reference to the self-reference to the product\n"
+        name:
+          type: "string"
+          description: "Name of the product\n"
+        place:
+          type: "array"
+          description: "The list of useful locations for the product"
+          items:
+            $ref: "#/definitions/RelatedPlaceRefOrValue"
+        primaryProductId:
+          type: "string"
+          description: "ID of the primary product. The primary product is the first\
+            \ ancestor that is the business product offering. It is marked in Amdocs\
+            \ Catalog as isPrimary. It must be used when searching for the product\
+            \ in the inventory.\n"
+        rootProductId:
+          type: "string"
+          description: "Product ID of the root product, in the product tree, represent\
+            \ the top product offer\n"
+        '@referredType':
+          type: "string"
+          description: "Name of the type of the referred resource entity\n"
+      description: ""
+    - $ref: "#/definitions/Extensible"
+  RelatedPlaceRefOrValue:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          example: "12345"
+          description: "Unique identifier of the place\n"
+        href:
+          type: "string"
+          description: "Hypertext reference to the place. This is a read only value.\n"
+        name:
+          type: "string"
+          description: "User-friendly name for the place, such as [Pickup Store],\
+            \ [Main Home], and so on\n"
+        role:
+          type: "string"
+          example: "installation"
+          description: "Role of the place, such as [installation], [ppu], [e911],\
+            \ and so on\n"
+        '@referredType':
+          type: "string"
+          description: "The actual type of the target instance when needed for disambiguation\n"
+    - $ref: "#/definitions/Extensible"
+    description: "Places where the products are sold or delivered\nA related place\
+      \ defines a place described by reference or by value linked to a specific entity\n"
+  ProductPrice:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "ID of the product offering price\n"
+        name:
+          type: "string"
+          description: "Name of the product offering price\n"
+        description:
+          type: "string"
+          description: "Description of the product offering price\n"
+        priceType:
+          type: "string"
+          description: "Type of the price: *recurring*, *one-time*, or *usage*\n"
+        priceCategory:
+          type: "string"
+          description: "Category of the price, such as *service fee*, *tax fee*, and\
+            \ so on\n"
+        recurringChargePeriod:
+          type: "string"
+          description: "Period to which to repeat the application of the recurring\
+            \ price, either *days*, *weeks*, *months*, or *years*. Note that This\
+            \ property is populated only if the price type is *recurring*.\n"
+        recurringChargePeriodLength:
+          type: "integer"
+          description: "Period length of the recurring charge\n"
+        unitOfMeasure:
+          type: "string"
+          description: "Unit of measurement of the product offering available at the\
+            \ offered price, such as minutes, GB, and so on\n"
+        quantity:
+          type: "integer"
+          description: "Quantity of the product price\n"
+        priceAlteration:
+          type: "array"
+          description: "Alteration that impacts the price\n"
+          items:
+            $ref: "#/definitions/ProductPriceAlteration"
+        price:
+          $ref: "#/definitions/Price"
+        standalonePrice:
+          $ref: "#/definitions/Price"
+        finalPrice:
+          $ref: "#/definitions/Price"
+        immediatePayOption:
+          $ref: "#/definitions/ImmediatePayOption"
+        installmentOption:
+          $ref: "#/definitions/InstallmentOption"
+        productPriceRelationship:
+          $ref: "#/definitions/ProductPriceRelationship"
+        productOfferingPrice:
+          $ref: "#/definitions/ProductOfferingPriceRef"
+        billingAccount:
+          $ref: "#/definitions/BillingAccountRef"
+        taxIncluded:
+          type: "string"
+          description: "Indicates if the price is defined in Amdocs Catalog as tax\
+            \ included or as tax excluded. Valid Values - Excluded, Included"
+        role:
+          type: "string"
+          description: "Role of the price, for example, *price*, *bundle price alteration*,\
+            \ and so on\n"
+        priceOverrideOption:
+          $ref: "#/definitions/PriceOverrideOption"
+        prorationFactor:
+          type: "number"
+          format: "double"
+          description: "Proration factor used to distribute the amount\n"
+        periodCoverage:
+          $ref: "#/definitions/TimePeriod"
+        relatedAppliedBillingRate:
+          $ref: "#/definitions/RelatedAppliedBillingRateRef"
+        priceProtection:
+          type: "array"
+          description: "Not implemented in Product Invneotry.Protection entity for\
+            \ the price.\n"
+          items:
+            $ref: "#/definitions/PriceProtection"
+        extensions:
+          type: "object"
+          additionalProperties:
+            type: "object"
+            properties: {}
+            x-amdocs:
+              refDefinition: "ProductPriceExtensions"
+    - $ref: "#/definitions/Extensible"
+  ProductPriceAlteration:
+    allOf:
+    - $ref: "#/definitions/PriceAlteration"
+    - type: "object"
+      properties:
+        productPromotionId:
+          type: "string"
+          description: "ID of the product promotion instance\n\n \n"
+  PriceAlteration:
+    allOf:
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+          description: "The name of the price alteration\n"
+        description:
+          type: "string"
+          description: "The description of the price alteration\n"
+        priceType:
+          type: "string"
+          description: "The type of the price&#58; recurring, one-time, or usage\n"
+        priceCategory:
+          type: "string"
+          description: "The price category\n"
+        priceAlterationCategory:
+          type: "array"
+          description: "The price alteration category\n"
+          items:
+            type: "string"
+        alterationType:
+          type: "string"
+        recurringChargePeriod:
+          type: "string"
+          description: "The recurring charge period, such as month, week, and so on.\n\
+            This property is populated if the type of the price is *recurring*.\n"
+        recurringChargePeriodType:
+          type: "string"
+          description: "`deprecated` (refer to *recurringChargePeriod*)\nThe type\
+            \ of the recurring charge period, such as month, week, and so on\n"
+        recurringChargePeriodLength:
+          type: "integer"
+          description: "The length of the recurring charge period\n"
+        unitOfMeasure:
+          type: "string"
+          description: "The unit representing how a product offering is available\
+            \ at the offered\nprice, such as minutes, GB, and so on\n"
+        applicationDuration:
+          type: "integer"
+          description: "The duration of the price alteration on the product offering,\
+            \ for example&#58; two months free of charge for the recurring charge\n"
+        promotionActionId:
+          type: "string"
+          description: "The ID of the promotion action\n"
+        immediatePromotionId:
+          type: "string"
+          description: "The ID of the immediate promotion instance\n"
+        alterationBundleProductOfferingId:
+          type: "string"
+          description: "The catalog identifier of the bundle ProductOffering where\
+            \ this price alteration is attached. This identifier will be provided\
+            \ in the input as part of the PricingProductOffering heirarchy.\n"
+        alterationApplyOrder:
+          type: "integer"
+          description: "The order of the alteration price applience on the price \n"
+        chargeType:
+          type: "string"
+          description: "The charge type that the price alteration represents. The\
+            \ supported values are&#58;<ul><li>debit<li>credit</ul> \nNote, null is\
+            \ considered as debit.\n"
+        priority:
+          type: "integer"
+          description: "Priority of the price\n"
+        prorationFactor:
+          type: "number"
+          format: "double"
+          description: "Proration factor used to prorate this amount\n"
+        periodCoverage:
+          $ref: "#/definitions/TimePeriod"
+        price:
+          $ref: "#/definitions/Price"
+        productOfferingPrice:
+          $ref: "#/definitions/ProductOfferingPriceRef"
+        extensions:
+          type: "object"
+          description: "Additional resource data\n"
+          additionalProperties:
+            type: "object"
+            properties: {}
+          x-amdocs:
+            refDefinition: "PriceAlterationExtensions"
+    - $ref: "#/definitions/Extensible"
+    description: "The price alteration. An amount, usually of money, that modifies\
+      \ the price charged for an item\n"
+  TimePeriod:
+    type: "object"
+    properties:
+      startDateTime:
+        type: "string"
+        format: "date-time"
+        description: "Start date and time of the period\n"
+      endDateTime:
+        type: "string"
+        format: "date-time"
+        description: "End date and time of the period\n"
+    description: "Time period\n"
+  Price:
+    type: "object"
+    properties:
+      taxIncludedAmount:
+        $ref: "#/definitions/Money"
+      dutyFreeAmount:
+        $ref: "#/definitions/Money"
+      taxAmount:
+        $ref: "#/definitions/Money"
+      taxRate:
+        type: "number"
+        format: "float"
+        description: "tax rate"
+      percentage:
+        type: "number"
+        format: "float"
+        description: "percentage"
+      priceReduction:
+        $ref: "#/definitions/Money"
+      priceOverride:
+        $ref: "#/definitions/Money"
+      component:
+        $ref: "#/definitions/Component"
+      taxComponent:
+        type: "array"
+        description: "Details of the tax revenue component. \n"
+        items:
+          $ref: "#/definitions/Component"
+      priceRecordId:
+        type: "string"
+        description: "The unique identifier of the price in the pricing domain.\n"
+      chargeType:
+        type: "string"
+        description: "The charge type that the price represents. The supported values\
+          \ are&#58;<ul><li>debit<li>credit</ul>\nNote, null is considered as debit.\n"
+      impactingPriceParameter:
+        type: "array"
+        description: "The parameters that impact the price\n"
+        items:
+          $ref: "#/definitions/PriceParameter"
+      splitCode:
+        type: "string"
+        description: "Split code by which the charge is split to revenue components\n"
+      appliedTax:
+        type: "array"
+        description: "applied tax"
+        items:
+          $ref: "#/definitions/AppliedTax"
+      taxId:
+        type: "string"
+        description: "Id of the price in the tax storage, where the detailed tax of\
+          \ the price is stored\n"
+      rateValidity:
+        $ref: "#/definitions/TimePeriod"
+      extensions:
+        type: "object"
+        description: "Additional resource data\n"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "PriceExtensions"
+    description: "The price of current catalog item. It is set to null if the price\
+      \ record is missing or if there is any exception.\nThe 'component' attribute\
+      \ is deprecated (although was never used) and replaced by 'taxComponent' attribute\n"
+  Money:
+    type: "object"
+    properties:
+      unit:
+        type: "string"
+        description: "The currency of the price\n"
+      value:
+        type: "number"
+        description: "The amount of the price\n"
+    description: "The price and currency of the catalog item\n"
+  Component:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the component \n"
+      splitCode:
+        type: "string"
+        description: "Referenced split code that is used to calculate the specific\
+          \ applied tax.\n`deprecated` - use the split code on the price item\n"
+      amount:
+        $ref: "#/definitions/Money"
+      revenueType:
+        type: "string"
+        description: "Revenue type of the component tax calculation item, such as\
+          \ Voice or Data\n"
+      taxCode:
+        type: "string"
+        description: "Tax code of the component tax calculation item\n"
+      extensions:
+        type: "object"
+        description: "Additional resource data\n"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "ComponentExtensions"
+    description: "Revenue component details if the tax calculation item is split to\
+      \ revenue components\n"
+  PriceParameter:
+    type: "object"
+    properties:
+      priceParameterType:
+        type: "string"
+        description: "The type of the price parameter\n"
+      name:
+        type: "string"
+        description: "The name of the price parameter\n"
+      value:
+        type: "string"
+        description: "The value of the price parameter\n"
+    description: "The parameters that may impact the price\n"
+  AppliedTax:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Identifier of the applied tax. The identifier is unique at the\
+          \ price level.\n"
+      taxCategory:
+        type: "string"
+        description: "Tax category, such as Luxury, Standard, and so on\n"
+      taxRate:
+        type: "number"
+        format: "float"
+        description: "Rate of the tax used\n"
+      taxDefinition:
+        $ref: "#/definitions/TaxDefinition"
+      taxAmount:
+        $ref: "#/definitions/Money"
+      taxableAmount:
+        $ref: "#/definitions/Money"
+      exemptAmount:
+        $ref: "#/definitions/Money"
+      periodCoverage:
+        $ref: "#/definitions/TimePeriod"
+      characteristic:
+        type: "array"
+        description: "characteristics\n"
+        items:
+          $ref: "#/definitions/TaxCharacteristic"
+      component:
+        $ref: "#/definitions/Component"
+      componentId:
+        type: "string"
+        description: "Component associated with this applied tax\n"
+      extensions:
+        type: "object"
+        description: "Additional resource data\n"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "AppliedTaxExtensions"
+    description: "Calculated tax response\n`deprecated fields:`\n- component - replaced\
+      \ by the price components\n- characteristic - replaced by extensions\n"
+  TaxDefinition:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "The display name of tax type"
+      taxRate:
+        type: "number"
+        format: "float"
+        description: "Tax Rate of tax\n`deprecated` use the tax rate on the applied\n"
+      taxType:
+        type: "string"
+        description: "VAT/GST etc."
+      category:
+        type: "string"
+        description: "Luxury/Standard etc\n`deprecated` use the tax category on the\
+          \ applied tax\n"
+      isExemption:
+        type: "boolean"
+        description: "Where the tax definition has exemption defined on it\n"
+      exemptionType:
+        type: "string"
+        description: "Exemption type. Valid Values - Customer, Service, Jurisdiction,\
+          \ None\n"
+      validFor:
+        $ref: "#/definitions/TimePeriod"
+      taxJurisdiction:
+        $ref: "#/definitions/TaxJurisdiction"
+    description: "Tax definition"
+  TaxJurisdiction:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "name"
+      level:
+        type: "string"
+        description: "level"
+      id:
+        type: "string"
+        description: "identifier"
+    description: ""
+  TaxCharacteristic:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "name"
+      value:
+        type: "string"
+        description: "value"
+    description: ""
+  ProductOfferingPriceRef:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Unique identifier of the product offering price\n"
+        name:
+          type: "string"
+          description: "Name of the product offering price\n"
+        version:
+          type: "string"
+          description: "Version of the product offering price\n"
+        validFor:
+          $ref: "#/definitions/TimePeriod"
+    - $ref: "#/definitions/Extensible"
+    description: "ProductPriceOffering reference. An amount, usually of money, that\
+      \ is asked for or allowed when a ProductOffering is bought, rented, or leased\n"
+  ImmediatePayOption:
+    type: "object"
+    properties:
+      payOption:
+        type: "string"
+        description: "The immediate pay option:\n<ul>\n<li> *MUST* - The price must\
+          \ be paid immediately\n<li> *MAY* - The price might be paid immediately\n\
+          </ul>\n"
+      payImmediately:
+        type: "boolean"
+        example: true
+        description: "Indicates whether the price included in the immediate payment.\n\
+          If the pay option is set to MUST, this indication is set to true.\nIf the\
+          \ pay option is set to MAY, this indication is set to either true or false\
+          \ based on a customer decission.\n"
+    description: "The payment options for the product offering price payment. The\
+      \ payment options can indicate whether the price must or may be paid immediatelly.\n\
+      In addition, the payment options include an indication whether the price should\
+      \ be included in the immediate payment or not.\nIf the payment option is set\
+      \ to must, this indication is set to true. Otherwise, if the payment option\
+      \ is set to may, the indication is set to either\ntrue or false based on a customer\
+      \ decission.\n"
+  InstallmentOption:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+        example: "eceac0c3-97b8-4623-8139"
+        description: "The identifier of the installment option\n"
+      installmentOption:
+        type: "string"
+        description: "Indicates if the installment option is optional / mandatory\
+          \ for the price\n"
+        readOnly: true
+      numberOfInstallments:
+        type: "integer"
+        description: "The number of installments\n"
+      downPayment:
+        $ref: "#/definitions/PaymentAmount"
+    description: "Represents an installment option of a price\n"
+  PaymentAmount:
+    type: "object"
+    properties:
+      amount:
+        $ref: "#/definitions/Money"
+      percentage:
+        type: "number"
+        format: "float"
+        description: "Represents the percentage that the amount represents out of\
+          \ the price\n"
+    description: "Represents a payment amount\n"
+  ProductPriceRelationship:
+    type: "object"
+    required:
+    - "id"
+    - "type"
+    properties:
+      id:
+        type: "string"
+        description: "Identifier of the related PricingProductOfferingPrice entity\n"
+      type:
+        type: "string"
+        description: "Relation type\n"
+    description: "The relation between pricing product offering price entities\n"
+  BillingAccountRef:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          example: "12345"
+          description: "Unique identifier of the billing account\n"
+        href:
+          type: "string"
+          description: "Hypertext reference to the billing account\n"
+        name:
+          type: "string"
+          description: "Name of the billing account\n"
+        ratingType:
+          type: "string"
+          description: "Indicates whether the account follows a specific payment option,\
+            \ such as prepaid, postpaid, and so on. This is a read only value.\n"
+        '@referredType':
+          type: "string"
+          description: "The actual type of the target instance when needed for disambiguation\n"
+    - $ref: "#/definitions/Extensible"
+    description: "BillingAccount reference. A BillingAccount is a detailed description\
+      \ of a bill structure\n"
+  PriceOverrideOption:
+    type: "object"
+    required:
+    - "overrideType"
+    properties:
+      overrideType:
+        type: "string"
+        example: "waive"
+        description: "Indicates which override option the CSR can apply. Valid Values\
+          \ : waive, absolute, external (to be used by customization), increase (future),\
+          \ decrease (future)\n"
+      overrideValue:
+        $ref: "#/definitions/PaymentAmount"
+      relatedParty:
+        $ref: "#/definitions/RelatedParty"
+      reason:
+        $ref: "#/definitions/Reason"
+      extensions:
+        type: "object"
+        description: "Additional resource data\n"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "PriceOverrideOptionExtensions"
+    description: "The waive and override data of a price\n"
+  Reason:
+    type: "object"
+    required:
+    - "reason"
+    properties:
+      reason:
+        type: "string"
+        example: "Customer Request"
+        description: "Name of the modification reason\n"
+      reasonText:
+        type: "string"
+        description: "Text of the modification reason. This property is populated\
+          \ if the type of the modification reason requires an input of a free text\n"
+    description: "The complementary reason associated with an action\n"
+  RelatedAppliedBillingRateRef:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the applied billing rate\n"
+      href:
+        type: "string"
+        description: "Hypertext reference to the applied billing rate\n"
+      '@referredType':
+        type: "string"
+        description: "Type of the applied billing rate, for example, *AppliedCustomerBillingOneTimeCharge*\
+          \ or *AppliedCustomerBillingRecurringCharge*    \n"
+    description: "Relation to another applied billing rate\n"
+  PriceProtection:
+    allOf:
+    - $ref: "#/definitions/EntityProtection"
+    - type: "object"
+    description: "Protection entity for a product offering price. The field 'protectionType'\
+      \ defines the actual protection. \nThe supported values are&#58;\n- *none* -\
+      \ The price is not a protected price.    \n- *unlimited* - The Price is protected\
+      \ for unlimited period\n- *external* - The Price is protected according to external\
+      \ system logic.  (may be set by customization)\n- *external none* - The Price\
+      \ is not protected according to external system logic.  (may be set by customization)\
+      \ \n"
+  EntityProtection:
+    allOf:
+    - type: "object"
+      properties:
+        protectionType:
+          type: "string"
+          description: "Type of the entity protection\n"
+        durationPolicy:
+          $ref: "#/definitions/DurationPolicy"
+        validFor:
+          $ref: "#/definitions/TimePeriod"
+        parameter:
+          type: "array"
+          items:
+            $ref: "#/definitions/ProtectionParameter"
+        relatedParty:
+          $ref: "#/definitions/RelatedParty"
+        reason:
+          $ref: "#/definitions/ProtectionReason"
+        extensions:
+          type: "object"
+          description: "Additional resource data\n"
+          additionalProperties:
+            type: "object"
+            properties: {}
+          x-amdocs:
+            refDefinition: "EntityProtectionExtensions"
+    - $ref: "#/definitions/Extensible"
+    description: "Indicates a protection for an entity to which it is associated,\
+      \ such as promotion, price and so on.  \n"
+  DurationPolicy:
+    type: "object"
+    properties:
+      duration:
+        $ref: "#/definitions/Quantity"
+      effectiveFor:
+        $ref: "#/definitions/TimePeriod"
+      startDatePolicy:
+        type: "string"
+        description: "Start date of the policy, from which the duration is calculated\n"
+      endDatePolicy:
+        type: "string"
+        description: "End date of the policy, until which the duration is calculated\n"
+      terminationPolicy:
+        type: "string"
+        description: "Defines the termination policy upon duration end date. Currently\
+          \ used by promotion action only.\n"
+      isOverridden:
+        type: "boolean"
+        description: "Indicates if duration policy is overridden manually by the user.\n\
+          This option is applicable only for Promotions.\n"
+    description: "Policy for calculting a limited duration for any entity\n"
+  Quantity:
+    allOf:
+    - type: "object"
+      properties:
+        amount:
+          type: "number"
+          format: "float"
+          description: "Numeric value in a given unit\n"
+        units:
+          type: "string"
+          description: "Units that are associated with the quantity\n"
+    - $ref: "#/definitions/Extensible"
+    description: "An amount in a given unit\n"
+  ProtectionParameter:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Parameter name\n"
+      value:
+        type: "array"
+        description: "Paremeter value\n"
+        items:
+          type: "string"
+      valueType:
+        type: "string"
+        description: "parameter value type, such as *string*, *date*, and so on\n"
+    description: "protection parameter\n"
+  ProtectionReason:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "customer request"
+        description: "Textual identifier of the modification reason\n"
+      reasonText:
+        type: "string"
+        description: "Free text for the modification reason, for cases where the modify\
+          \ reason type requires the input of free text\n"
+    description: "The modification reason associated with the protection modification\n"
+  ProductOfferingRef:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Unique identifier of the product offering\n"
+        href:
+          type: "string"
+          description: "Hypertext reference to the product offering\n"
+        name:
+          type: "string"
+          description: "Name of the product offering\n"
+        productOfferingType:
+          type: "string"
+          description: "Type of the product offering\n"
+        productOfferingTypeId:
+          type: "string"
+          description: "Type ID of the product offering\n"
+        productOfferingTypeGroup:
+          type: "string"
+          description: "The type of the product offering group\n"
+        productOfferingClassification:
+          type: "string"
+          description: "The classification of the product offering.\nValid values&#58;\
+            \ customerOffer, subscriberMainOffer, subscriberOffer\n"
+        serialized:
+          type: "boolean"
+          description: "Indicates whether the product offering is maintained per instance\
+            \ or can represent a bulk quantity\n"
+        primary:
+          type: "boolean"
+          description: "Indicates whether the product offering has a business significance\
+            \ for the customer&#58;\n- It is reflected as a product for the customer\
+            \ and it is actionable - the customer can perform ordering actions on\
+            \ it\n- An action performed on a primary offer can impact the actions\
+            \ available for its bundled or dependent offers (for example, when ownership\
+            \ of a primary offer is changed some internal offers cannot be added or\
+            \ removed)\n"
+        version:
+          type: "string"
+          description: "Version of the product offering\n"
+        valueRank:
+          type: "integer"
+          description: "Value rank of the product offering\n"
+        durationPolicy:
+          $ref: "#/definitions/DurationPolicy"
+        attachment:
+          type: "array"
+          items:
+            $ref: "#/definitions/AttachmentRefOrValue"
+        '@referredType':
+          type: "string"
+          description: "The actual type of the target instance when needed for disambiguation\n"
+    - $ref: "#/definitions/Extensible"
+    description: "Reference to the product offering entities that are orderable from\
+      \ the provider of the catalog. The resource includes pricing information.\n"
+  AttachmentRefOrValue:
+    allOf:
+    - $ref: "#/definitions/AttachmentRef"
+    - $ref: "#/definitions/Attachment"
+    description: "An attachment by value or by reference. An attachment complements\
+      \ the description of an element, for example through a document, a video, a\
+      \ picture.\n"
+  AttachmentRef:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Unique identifier for this particular attachment\n"
+        href:
+          type: "string"
+          format: "uri"
+          description: "URI for this Attachment\n"
+        url:
+          type: "string"
+          format: "uri"
+          description: "Uniform Resource Locator, is a web page address (a subset\
+            \ of URI)\n"
+        name:
+          type: "string"
+          description: "The name of the attachment\n"
+        attachmentType:
+          type: "string"
+          description: "Attachment type such as video, picture"
+          x-amdocs:
+            refdata: "attachmentType"
+        description:
+          type: "string"
+          description: "A narrative text describing the content of the attachment\n"
+        '@referredType':
+          type: "string"
+          description: "The actual type of the target instance when needed for disambiguation\n"
+    - $ref: "#/definitions/Extensible"
+    description: "Attachment reference. An attachment complements the description\
+      \ of an element (for instance a product) through video, pictures\n"
+  Attachment:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Unique identifier for this particular attachment\n"
+        href:
+          type: "string"
+          format: "uri"
+          description: "URI for this Attachment\n"
+        url:
+          type: "string"
+          format: "uri"
+          description: "Uniform Resource Locator, is a web page address (a subset\
+            \ of URI)\n"
+        name:
+          type: "string"
+          description: "The name of the attachment\n"
+        attachmentType:
+          type: "string"
+          description: "Attachment type such as video, picture\n"
+        description:
+          type: "string"
+          description: "A narrative text describing the content of the attachment\n"
+        mimeType:
+          type: "string"
+          description: "Attachment mime type such as extension file for video, picture\
+            \ and document"
+          x-amdocs:
+            refData: "attachmentMimeType"
+        content:
+          type: "string"
+          format: "base64"
+          description: "The actual contents of the attachment object, if embedded,\
+            \ encoded as base64\n"
+        size:
+          description: "The size of the attachment.\n"
+          $ref: "#/definitions/Quantity"
+        validFor:
+          description: "The period of time for which the attachment is valid\n"
+          $ref: "#/definitions/TimePeriod"
+    - $ref: "#/definitions/Extensible"
+    description: "Complements the description of an element (for instance a product)\
+      \ through video, pictures...\n"
+  ProductSpecificationRef:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Unique identifier of the product specification\n"
+        href:
+          type: "string"
+          description: "Hypertext reference to the product specification\n"
+        name:
+          type: "string"
+          description: "Name of the product specification\n"
+        productSpecificationType:
+          type: "string"
+          description: "Type of the product specification\n"
+        productSpecificationTypeId:
+          type: "string"
+          description: "Type ID of the product specification\n"
+        '@referredType':
+          type: "string"
+          description: "The actual type of the target instance when needed for disambiguation\n"
+    - $ref: "#/definitions/Extensible"
+    description: "Detailed information of a tangible or intangible object that is\
+      \ made available externally in the form of a product offering to customers or\
+      \ other parties playing a party role\n"
+  ExternalIdentifier:
+    allOf:
+    - $ref: "#/definitions/Extensible"
+    - type: "object"
+      properties:
+        externalIdentifierType:
+          type: "string"
+          description: "Type of the external system identifier\n"
+        id:
+          type: "string"
+          description: "Unique identifier in the external system\n"
+        version:
+          type: "string"
+          description: "Non TMF. Version of the related entity in the external system\n"
+        owner:
+          type: "string"
+          description: "The external system identifier that owns the identifier\n"
+        extensions:
+          type: "object"
+          description: "Additional resource data\n"
+          additionalProperties:
+            type: "object"
+            properties: {}
+          x-amdocs:
+            refDefinition: "ExternalIdentifierExtensions"
+    description: "Reference to an external system identifier\n"
+  RelatedChannel:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+        example: "Retail"
+        description: "Unique identifier of the channel\n"
+      href:
+        type: "string"
+        description: "Hypertext reference to the channel\n"
+      name:
+        type: "string"
+        description: "Name of the channel\n"
+      role:
+        type: "string"
+        description: "Role playing by the channel, such as initChannel, and so on\n"
+    description: "Related channel to another entity, such as online web, mobile app,\
+      \ social, and so on\n"
+  RelatedProductOrderItem:
+    allOf:
+    - type: "object"
+      properties:
+        productOrderId:
+          type: "string"
+          description: "The ID of the product order\n"
+        productOrderHref:
+          type: "string"
+          description: "Hypertext reference to the self-reference to the product order\n"
+        productOrderItemId:
+          type: "string"
+          description: "The ID of the product order item\n"
+        actionReason:
+          type: "array"
+          description: "The action and its reason as was captured by the order\n"
+          items:
+            $ref: "#/definitions/ActionReason"
+        '@referredType':
+          type: "string"
+          description: "Name of the type of the referred resource entity\n"
+    - $ref: "#/definitions/Extensible"
+    description: "The product order in which the product was created\n"
+  ActionReason:
+    allOf:
+    - $ref: "#/definitions/Action"
+    - $ref: "#/definitions/Reason"
+    - type: "object"
+    description: "The action and complementary reason associated with a customer-owned\
+      \ product or a newly provided product offering\n"
+  Action:
+    type: "object"
+    required:
+    - "action"
+    properties:
+      action:
+        type: "string"
+        example: "add"
+        description: "Name of the action performed on the instance of the product\
+          \ offering\n"
+      metadata:
+        type: "array"
+        description: "Metadata of the Modify Reason\n"
+        readOnly: true
+        items:
+          $ref: "#/definitions/Metadata"
+    description: "The action and complementary reason associated with a customer-owned\
+      \ product or a newly provided product offering\n"
+  ProductTerm:
+    allOf:
+    - type: "object"
+      properties:
+        name:
+          type: "string"
+          description: "The name of the term \n"
+        description:
+          type: "string"
+          description: "The description of the term\n"
+        freezeDate:
+          type: "string"
+          format: "date-time"
+          description: "The time in which the term is frozen\n"
+        impactType:
+          type: "string"
+          description: "The type of impact on the term of the product due to some\
+            \ action performed on the product  \n"
+        policyId:
+          type: "string"
+          description: "The ID of the policy that is used in the catalog to handle\
+            \ the term\n"
+        duration:
+          $ref: "#/definitions/Quantity"
+        remainingDuration:
+          $ref: "#/definitions/Quantity"
+        elapsedDuration:
+          $ref: "#/definitions/Quantity"
+        validFor:
+          $ref: "#/definitions/TimePeriod"
+        action:
+          type: "string"
+          description: "An action performed on the term. Available values can be *add*,\
+            \ *remove*, or *override*.\n"
+        override:
+          type: "boolean"
+          description: "Indicates whether the term is overridden\n"
+        changeTermPolicy:
+          $ref: "#/definitions/ChangeTermPolicy"
+        metadata:
+          type: "array"
+          description: "The characteristics of the product\n"
+          items:
+            $ref: "#/definitions/Metadata"
+        extensions:
+          type: "object"
+          additionalProperties:
+            type: "object"
+            properties: {}
+            x-amdocs:
+              refDefinition: "ProductTermextensions"
+    - $ref: "#/definitions/Extensible"
+    description: "The terms of the product as they were captured during the order\
+      \ process\n"
+  ChangeTermPolicy:
+    type: "object"
+    properties:
+      startPolicy:
+        type: "string"
+        description: "Start date policy for the new  or overridden term. The available\
+          \ values are *action date*, *previous term start date*, or *override start\
+          \ date*.\n"
+      overrideValidFor:
+        $ref: "#/definitions/TimePeriod"
+      extensions:
+        type: "object"
+        description: "extensions\n"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "ChangeTermPolicyExtension"
+    description: "The entity holding change term policies \n"
+  ProductPromotionRef:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "ID of the promotion instance in inventory\n"
+      href:
+        type: "string"
+        description: "Hypertext reference to the self-reference to the promotion\n"
+      productQualificationType:
+        type: "string"
+        description: "Qualification type of the promotion - either benefit product\
+          \ or trigger product\n"
+      promotionCatalogId:
+        type: "string"
+        description: "Catalog Id of the promotion\n"
+    description: "The reference to the product promotion\n"
+  HighVolumeProductPromotionRef:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "ID of the promotion instance in inventory\n"
+      href:
+        type: "string"
+        description: "Hypertext reference to the self-reference to the promotion\n"
+      immediatePromotionId:
+        type: "string"
+        description: "ID of the immediate promotion that that is related to the product\
+          \ order from which the promotion originated.\n"
+      itemQualificationType:
+        type: "string"
+        description: "The type of the qualification result for the item - either trigger,\
+          \ benefit or discountOfferTrigger\n"
+      itemStatus:
+        type: "string"
+        description: "The status of the benefit/trigger item in the qualified promotion.\
+          \ The status can have the following values:\n\n- 'add' - For a new benefit/trigger\
+          \ item in the immediate promotion\n- 'keep' - For an existing benefit/trigger\
+          \ item that remains as is in the immediate product promotion as the result\
+          \ of reevaluation\n- 'revoke' - For an existing benefit/trigger that is\
+          \ revoked in the immediate product promotion as the result of reevaluation\
+          \ \n"
+      promotionCriteriaGroupId:
+        type: "string"
+        description: "The ID of the promotion criteria group as part of which the\
+          \ item is qualified\n"
+      promotionActionId:
+        type: "string"
+        description: "The identifier of the promotion action.\n"
+      validFor:
+        $ref: "#/definitions/TimePeriod"
+      promotionCatalogId:
+        type: "string"
+        description: "Catalog Id of the promotion\n"
+    description: "The reference to a high volume product promotion\n"
+  NextAction:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        description: "the type of the duration\n"
+      action:
+        type: "string"
+        description: "Action which relates to the reason\n"
+      calculateEffectiveDate:
+        type: "string"
+        format: "date-time"
+        description: "Designated date for the next action to occur\n"
+      actionReason:
+        $ref: "#/definitions/ActionReason"
+      durationPolicy:
+        $ref: "#/definitions/DurationPolicy"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "NextActionExtensions"
+  BusinessActivity:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name of the business activity \n"
+      effectiveDate:
+        type: "string"
+        format: "date-time"
+        description: "Date of the business activity \n"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "BusinessActivityExtensions"
+    description: "Business Activity includes dates that are used by other systems\
+      \ like billing, fulfillment, and so on.\n"
+  AgreementItemRef:
+    allOf:
+    - $ref: "#/definitions/AgreementRef"
+    - type: "object"
+      properties:
+        agreementItemId:
+          type: "string"
+          description: "Unique-Identifier of the agreement item\n"
+    description: "Agreement reference. An agreement represents a contract or arrangement,\
+      \ either written or verbal and sometimes enforceable by law, such as a service\
+      \ level agreement or a customer price agreement. An agreement involves a number\
+      \ of other business entities, such as products, services, and resources and/or\
+      \ their specifications.\n"
+  AgreementRef:
+    allOf:
+    - type: "object"
+      properties:
+        id:
+          type: "string"
+          example: "12345"
+          description: "Unique-Identifier for the agreement\n"
+        href:
+          type: "string"
+          description: "Hypertext reference to the greement\n"
+        name:
+          type: "string"
+          description: "Name of the agreement\n"
+        alternateId:
+          type: "string"
+          description: "Business id for the agreement, can be used to retrieve the\
+            \ agreement by search or by id.\n"
+        agreementType:
+          type: "string"
+          description: "`deprecated` - Not in use.\nThe type of the agreement. For\
+            \ example commercial\n"
+        '@referredType':
+          type: "string"
+          description: "The actual type of the target instance when needed for disambiguation\n"
+    - $ref: "#/definitions/Extensible"
+    description: "Agreement reference. An agreement represents a contract or arrangement,\
+      \ either written or verbal and sometimes enforceable by law, such as a service\
+      \ level agreement or a customer price agreement. An agreement involves a number\
+      \ of other business entities, such as products, services, and resources and/or\
+      \ their specifications\n"
+  Message:
+    type: "object"
+    properties:
+      text:
+        type: "string"
+        description: "Localized descriptive message\n"
+        readOnly: true
+      type:
+        type: "string"
+        description: "Implementation discriminator\n"
+        readOnly: true
+      parameter:
+        type: "array"
+        description: "Additional message parameters\n"
+        readOnly: true
+        items:
+          $ref: "#/definitions/MessageParameter"
+      severity:
+        type: "string"
+        description: "Severity of the message\n"
+        readOnly: true
+      path:
+        type: "string"
+        description: "Path to the resource part to which the message is related\n"
+        readOnly: true
+    description: "Message returned by internally consumed apis (for example calculatePrice)\n"
+  MessageParameter:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Parameter name\n"
+        readOnly: true
+      value:
+        type: "array"
+        description: "Paremeter value\n"
+        readOnly: true
+        items:
+          type: "string"
+    description: "message parameter\n"
+  Error:
+    type: "object"
+    required:
+    - "code"
+    discriminator: "@type"
+    properties:
+      code:
+        type: "string"
+        example: "DE-INV-300012017"
+        description: "Error code relevant to an application, defined in the API or\
+          \ in a common list\n"
+        pattern: "[^\\s]+"
+      reason:
+        type: "string"
+        description: "Explanation of the reason for the error that can be displayed\
+          \ to a user\n"
+      message:
+        type: "string"
+        description: "Additional information about the error  and corrective actions\
+          \ related to the error that can be displayed to a user\n"
+      status:
+        type: "string"
+        description: "HTTP error code extension\n"
+      referenceError:
+        type: "string"
+        format: "uri"
+        description: "URI of the documentation describing the error\n"
+      traceId:
+        type: "string"
+        description: "Unique tracker ID that is used to facilitate the troubleshooting\n"
+      '@type':
+        type: "string"
+        description: "Type of the error\n"
+      characteristic:
+        type: "array"
+        description: "Charachteristic parameters that are associated with the error\n"
+        items:
+          $ref: "#/definitions/ErrorCharacteristic"
+    description: "Error response. This object is used when an API throws an error,\
+      \ typically with a HTTP error response codes 3xx, 4xx, and 5xx\n"
+  ErrorCharacteristic:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Non-localized name identifier of the characteristic\n"
+      value:
+        type: "string"
+        description: "Value of the characteristic\n"
+    description: "Parameter that is associated with the error entity\n"
+  ErrorResponse:
+    type: "object"
+    required:
+    - "code"
+    - "reason"
+    discriminator: "@type"
+    properties:
+      code:
+        type: "string"
+        description: "The code of the response\n"
+      reason:
+        type: "string"
+        description: "Explanation of the reason for the error which can be shown to\
+          \ a client user\n"
+      message:
+        type: "string"
+        description: "The response text\n"
+      status:
+        type: "string"
+        description: "HTTP Error code extension\n"
+      link:
+        type: "string"
+        format: "url"
+        description: "The reference to the item\n`deprecated`\n"
+      rel:
+        type: "string"
+        description: "The relation type of the item\n`deprecated`\n"
+        default: "help"
+      referenceError:
+        type: "string"
+        format: "uri"
+        description: "URI of documentation describing the error\n"
+      traceId:
+        type: "string"
+        description: "The unique tracker ID used to facilitate troubleshooting\n"
+      characteristics:
+        type: "array"
+        description: "The relevant parameters consumer need which are associated with\
+          \ this error\n"
+        items:
+          $ref: "#/definitions/Characteristics"
+    description: "\"Used when an API throws an Error, typically with a HTTP error\
+      \ response-code (3xx, 4xx, 5xx)\"\"\n"
+  Characteristics:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      value:
+        type: "string"
+    description: "List of relevant parameters consumer need which are associated with\
+      \ this entity\n"
+  ValidationError:
+    allOf:
+    - $ref: "#/definitions/Error"
+    - properties:
+        validationMessage:
+          type: "array"
+          description: "The validation messages\n"
+          items:
+            $ref: "#/definitions/ValidationMessage"
+    description: "Validation error object that is used when an API throws an error,\
+      \ typically with a HTTP error response code 422\n"
+  ValidationMessage:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Non-localized name identifier of the validation message\n"
+      text:
+        type: "string"
+        description: "Localized descriptive validation message\n"
+      type:
+        type: "string"
+        description: "Type of the validation message\n"
+      subtype:
+        type: "string"
+        description: "Distinct code which represents the issue\n"
+      parameter:
+        type: "array"
+        description: "Name/value pair of the validation message\n"
+        items:
+          $ref: "#/definitions/ValidationMessageParameter"
+      severity:
+        type: "string"
+        description: "Severity of the validation message\n"
+      path:
+        type: "string"
+        description: "Path to the resource part to which the validation message is\
+          \ related\n"
+      resource:
+        type: "array"
+        description: "Resource that is associated with the message\n"
+        items:
+          $ref: "#/definitions/RelatedResource"
+    description: "Message associated with the validation failure\n"
+  ValidationMessageParameter:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name of the parameter\n"
+      value:
+        type: "array"
+        description: "Value of the parameter\n"
+        items:
+          type: "string"
+    description: "Name/value pair of the validation message parameter\n"
+  RelatedResource:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        description: "Type of the resource\n"
+      id:
+        type: "string"
+        description: "Unique identifier of the resource\n"
+      variable:
+        type: "array"
+        description: "Variables related to the resource\n"
+        items:
+          $ref: "#/definitions/Variable"
+      containedResource:
+        type: "array"
+        description: "Other resources, specs, or offers that are linked to the message\
+          \ but did not trigger the validation message\n"
+        items:
+          $ref: "#/definitions/ContainedResource"
+    description: "Resource that is associated with the validation message (that is,\
+      \ triggered the validation failure)\n"
+  Variable:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        description: "Type of the variable\n"
+      id:
+        type: "string"
+        description: "Unique identifier of the variable\n"
+      value:
+        type: "array"
+        description: "Value(s) of the variable\n"
+        items:
+          type: "string"
+    description: "Variable that is associated with a resource\n"
+  ContainedResource:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        description: "Type of the resource\n"
+      id:
+        type: "string"
+        description: "Unique identifier of the resource\n"
+      variable:
+        type: "array"
+        description: "Variables that are related to the resource\n"
+        items:
+          $ref: "#/definitions/Variable"
+    description: "Resources that are contained in the validation message\n"
+  calculationStartDate:
+    type: object
+    properties:
+      calculationStartDate:
+        type: string
+        format: date
+        description: |
+          Calculation startDate
+  calculatedTerminationDate:
+    type: object
+    properties:
+      productId:
+        type: string
+        description: |
+          The ID of the product, unique ID of the product which identify that specific resource
+  ProductPromotion:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "ID of the product promotion\n"
+      href:
+        type: "string"
+        description: "Hypertext reference to the self reference of the product promotion\n"
+      immediatePromotionId:
+        type: "string"
+        description: "ID of the immediate promotion. The engine promotion is created\
+          \ as defined for the order.\n"
+      previousPromotionId:
+        type: "string"
+        description: "ID of the product promotion instance for the product promotion\
+          \ \n"
+      state:
+        type: "string"
+        description: "Apply state of the qualified promotion.\nThe state can have\
+          \ the following values:\n- *applied* - For a promotion that all of its benefits\
+          \ are applied\n- *notApplied* - For a promotion that none of its benefits\
+          \ are applied - future\n- *partiallyApplied* - For a promotion that part\
+          \ of its benefits are applied - future\n- *revokedByRequest* - For a promotion\
+          \ that is revoked by an explicit request from a consumer\n"
+      status:
+        type: "string"
+        description: "Lifecycle of the product promotion\n"
+      startDate:
+        type: "string"
+        format: "date-time"
+        description: "Creation date of the current product promotion instance \n"
+      lastUpdate:
+        type: "string"
+        format: "date-time"
+        description: "Update date of the current product promotion\n"
+      instanceManagementType:
+        type: "string"
+        description: "The type of product promotion instance (instancePerSet, highVolume).\
+          \ when null default used is instancePerSet\nNOT IMPLEMENTED YET IN PRODUCT\
+          \ INVENTORY\n"
+      contractCategory:
+        type: "string"
+        description: "defined the category of the product promotions which is related\
+          \ to a contract. Possible values:\n  * contractedOffer - the product promotion\
+          \ represents the signed product promotion template under a specific contract\n\
+          \  * contractedOfferInstance - a product promotion instance related to a\
+          \ certain use as a part of a signed contract\n  * null - means the product\
+          \ promotion is not related to any contract\n"
+      promotion:
+        $ref: "#/definitions/PromotionRef"
+      productPromotionCharacteristics:
+        type: "array"
+        items:
+          $ref: "#/definitions/ContextCharacteristic"
+      appliedBy:
+        $ref: "#/definitions/RelatedParty"
+      appliedReason:
+        $ref: "#/definitions/ActionReason"
+      revokedBy:
+        $ref: "#/definitions/RelatedParty"
+      revokeReason:
+        $ref: "#/definitions/ActionReason"
+      relatedParty:
+        $ref: "#/definitions/RelatedPartyCommerce"
+      promotionRelatedParty:
+        type: "array"
+        items:
+          $ref: "#/definitions/RelatedPartyCommerce"
+      benefitProduct:
+        type: "array"
+        description: "The product benefited from the recieved that promotion\n"
+        items:
+          $ref: "#/definitions/BenefitProduct"
+      triggerProduct:
+        type: "array"
+        description: "Triggering prouduct that caused the benefit product to receive\
+          \ the promotion\n"
+        items:
+          $ref: "#/definitions/TriggerProduct"
+      agreement:
+        type: "array"
+        items:
+          $ref: "#/definitions/AgreementRef"
+      productPromotionRelationship:
+        type: "array"
+        items:
+          $ref: "#/definitions/ProductPromotionRelationship"
+      promotionProtection:
+        type: "array"
+        description: "Protection entity for a product promotion.\n"
+        items:
+          $ref: "#/definitions/PromotionProtection"
+      metadata:
+        type: "array"
+        description: "Protection entity for a product promotion.\n"
+        items:
+          $ref: "#/definitions/Metadata"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "ProductPromotionExtensions"
+    description: "The product promotion\n"
+  PromotionRef:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique ID of the promotion\n"
+      name:
+        type: "string"
+        description: "Name of the promotion\n"
+      description:
+        type: "string"
+        description: "Description of the promotion for a business user\n"
+      type:
+        type: "string"
+        description: "Type of the promotion\n"
+      validFor:
+        $ref: "#/definitions/TimePeriod"
+      priority:
+        type: "integer"
+        description: "Priority of the promotion\n"
+      href:
+        type: "string"
+        format: "url"
+        description: "Hypertext reference to the self-reference to the item\n"
+        readOnly: true
+      applyPolicy:
+        type: "string"
+        description: "Method of how the policy is applied to the promotion, either\
+          \ *manual* or *automatic* \n"
+    description: "The reference to the definition of a promotion\n"
+  ContextCharacteristic:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name of the characteristic\n"
+      contextType:
+        type: "string"
+        description: "Context type of the characteristic\n"
+      valueType:
+        type: "string"
+        description: "Value type of the characteristic\n"
+      value:
+        type: "array"
+        description: "alue of the characteristic\n"
+        items:
+          type: "string"
+    description: "The reference to the context definition of the rule\n"
+  BenefitProduct:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique ID of the product\n"
+      href:
+        type: "string"
+        description: "Hypertext reference to the self-reference to the existing product\n"
+      itemType:
+        type: "string"
+        description: "Type of the benefit product. Valid values are *product* and\
+          \ *nonRetainedProduct*.\nFor benefit type *nonRetainedProduct*, only partial\
+          \ data is stored.\nThis means that no ID-related fields are populated, such\
+          \ as ID, primaryProductId, and pathToRoot.\n"
+      primaryProductId:
+        type: "string"
+        description: "Primary product ID, or document ID, of the related product\n"
+      promotionCriteriaGroupId:
+        type: "string"
+        description: "Identifier of the promotion criteria group, whether root or\
+          \ nested. As part of this group, the product is qualified as a benefit item.\n"
+      pathToRoot:
+        type: "string"
+        description: "Path from the current item in the product offering structure\
+          \ to the root. Populated in case the benefit item is a nested item.\n"
+      itemStatus:
+        type: "string"
+        description: "Status of the promotion. Available values are *add*, *revoke*,\
+          \ or *keep*.\n"
+      itemState:
+        type: "string"
+        description: "State of the item. Available values are *applied* or *notApplied*.\n"
+      relatedPromotionAction:
+        type: "array"
+        description: "Related promotion action of the benefit product\n"
+        items:
+          $ref: "#/definitions/PromotionAction"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "BenefitProductextensions"
+    description: "The product that benefits from the promotion\n"
+  PromotionAction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique ID of an existing product\n"
+      name:
+        type: "string"
+        description: "Name of the action\n"
+      description:
+        type: "string"
+        description: "Description of the action\n"
+      actionType:
+        type: "string"
+        description: "Type of the action, such as *priceAlteration* or *productOfferingBenefit*\n"
+      actionValue:
+        type: "string"
+        description: "Action amount\n"
+      duration:
+        $ref: "#/definitions/Quantity"
+      durationPolicy:
+        $ref: "#/definitions/DurationPolicy"
+      actionStatus:
+        type: "string"
+        description: "Lifecycle status of the action\n"
+      validFor:
+        $ref: "#/definitions/TimePeriod"
+      actionTerminationPolicy:
+        type: "string"
+        description: "Termination policy upon duration end date\n"
+      promotionPriceAlteration:
+        $ref: "#/definitions/PromotionPriceAlteration"
+      productOfferingBenefit:
+        type: "array"
+        description: "Reference to a product offering used as a free offer benefit\
+          \ by the promotion\n"
+        items:
+          $ref: "#/definitions/ProductOfferingBenefit"
+      relatedTriggerProduct:
+        type: "array"
+        description: "Optional relation from a specific qualified promotion action\
+          \ to a specific trigger item.\nFor a promotion action with *actionType =\
+          \ productOffering* and *actionObjectRef* pointing to one of the criteria\
+          \ groups,\nthis relation indicates a relevant trigger item to which the\
+          \ action must be subscription-related. \n"
+        items:
+          $ref: "#/definitions/RelatedTriggerProduct"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+          x-amdocs:
+            refDefinition: "PromotionActionextensions"
+    description: "The promotion action of the assigned promotion.\nNotes*&#58;\n-\
+      \ The duration field is deprecated. Use the duration policy entity instead.\n\
+      - The *actionTerminationPolicy* field is deprecated. Use the *durationPolicy.terminationPolicy*\
+      \ field instead.\n"
+  PromotionPriceAlteration:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      priceType:
+        type: "string"
+        description: "Product offering price type. Available values one-time charge\
+          \ *OC* or recurring charge *RC*.\n"
+      productOfferingPrice:
+        $ref: "#/definitions/ProductOfferingPriceRef"
+      priceAlterationOverrideOption:
+        $ref: "#/definitions/PriceAlterationOverrideOption"
+    description: "The action discount reference representing the relevant pricing\
+      \ entity that defines the actual discount\n"
+  PriceAlterationOverrideOption:
+    type: "object"
+    properties:
+      overrideType:
+        type: "string"
+        description: "Indicates which override option the CSR can apply. Valid Values\
+          \ : decrease, absolute, external (to be used by customization)\n"
+      overrideValue:
+        $ref: "#/definitions/PaymentAmount"
+      extensions:
+        type: "object"
+        description: "Additional resource data\n"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "PriceAlterationOverrideOptionExtensions"
+    description: "The override data of a price alteration\n"
+  ProductOfferingBenefit:
+    type: "object"
+    properties:
+      productOfferingId:
+        type: "string"
+        description: "ID of the product offering granted as a benefit\n"
+      promotionPriceAlteration:
+        type: "array"
+        description: "Reference to the price entity representing the actual monetary\
+          \ discount\n"
+        items:
+          $ref: "#/definitions/PromotionPriceAlteration"
+    description: "The reference to a product offering used as a free offer benefit\
+      \ by the promotion\n"
+  RelatedTriggerProduct:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique ID of the related trigger item\n"
+      role:
+        type: "string"
+        description: "Role of the related trigger item\n"
+    description: "A relation to a specific trigger item.\nFor example, for a promotion\
+      \ action with *actionType = productOffering*,\nthe relation specifies a relevant\
+      \ trigger item to which the action must be related.\nThe type of the relation\
+      \ is specified in the *role* field.\n"
+  TriggerProduct:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique ID of an existing product\n"
+      href:
+        type: "string"
+        description: "Hypertext reference to the self-reference to the existing product\n"
+      itemType:
+        type: "string"
+        description: "Type of the trigger product. Valid values are *product* and\
+          \ *nonRetainedProduct*.\nFor benefit type *nonRetainedProduct*, only partial\
+          \ data is stored.\nThis means no ID-related fields are populated, such as\
+          \ ID, primaryProductId, and pathToRoot.\n"
+      primaryProductId:
+        type: "string"
+        description: "Primary product ID, or document ID, of the related product\n"
+      promotionCriteriaGroupId:
+        type: "string"
+        description: "Identifier of the promotion criteria group, whether root or\
+          \ nested. As part of this group, the product is qualified as a trigger item.\n"
+      pathToRoot:
+        type: "string"
+        description: "Path from the current item in the product offering structure\
+          \ to the root. Populated in case the trigger item is a nested item.\n"
+      itemStatus:
+        type: "string"
+        description: "Status of the promotion. Available values are *add*, *revoke*,\
+          \ or *keep*.\n"
+      triggerProductCharacteristic:
+        type: "array"
+        items:
+          $ref: "#/definitions/ContextCharacteristic"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "TriggerProductextensions"
+    description: "The product that triggers the assigned promotion\n"
+  ProductPromotionRelationship:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the product promotion\n"
+      relationshipType:
+        type: "string"
+        example: "contractedOffer"
+        description: "Type of the product promotion relationship\n"
+      relationshipSubtype:
+        type: "string"
+        example: ""
+        description: "Subtype of the product promotion\n"
+    description: "The definition of the product promotion relationship with another\
+      \ product promotion\n"
+  PromotionProtection:
+    allOf:
+    - $ref: "#/definitions/EntityProtection"
+    - type: "object"
+    description: "Protection entity for an immediate promotion. The field 'protectionType'\
+      \ defines the actual protection. \nThe supported values are&#58;\n- *sellability*\
+      \ - protects the catalog promotion rule sellability period and ensures that\
+      \ this promotion will be included in the qualification process even if the rule\
+      \ is already sales expired. Used in cases of future order protection.   \n-\
+      \ *contractedOffer* - protects the contracted promotion (template). The actual\
+      \ protection is considered once contracted offer instances are created or when\
+      \ the agreement is modified.   \n"
+  ExportJobDefinitionOutput:
+    type: "object"
+    properties:
+      jobDefinitionId:
+        type: "string"
+        description: "Definition name of the job \n"
+      jobInstanceId:
+        type: "string"
+        description: "ID of the job \n"
+    description: "The definition of the export job \n"
+  PriceProduct:
+    type: "object"
+    properties:
+      description:
+        type: "string"
+        description: "Description of the product\n"
+      productId:
+        type: "string"
+        description: "ID of the product, unique ID of the product which identify that\
+          \ specific resource\n"
+      alternateId:
+        type: "integer"
+        format: "int64"
+        description: "Alternate ID of the product, unique integer identifier for specific\
+          \ product, product may be retrieved also upon it\n"
+      href:
+        type: "string"
+        description: "Hypertext reference to the self-reference to the product\n"
+      isBundle:
+        type: "boolean"
+        description: "Indicates whether the product represents a bundle\n"
+      isCustomerVisible:
+        type: "boolean"
+        description: "Indicates whether a related party can view the product\n"
+      name:
+        type: "string"
+        description: "Name of the product. It could be the same as the name of the\
+          \ product offering.     \n"
+      orderDate:
+        type: "string"
+        format: "date-time"
+        description: "Date on which the order was created\n"
+      productSerialNumber:
+        type: "string"
+        description: "Serial number of the product\n"
+      startDate:
+        type: "string"
+        format: "date-time"
+        description: "Date time (DateTime). Is the date from which the product has\
+          \ been created (current version). \n"
+      status:
+        type: "string"
+        description: "Lifecycle status of the product\n"
+      statusChangeReason:
+        type: "array"
+        description: "Reason name of the product status change\n"
+        items:
+          $ref: "#/definitions/StatusReason"
+      terminationDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when the termination action was performed on the product\n"
+      version:
+        type: "string"
+        description: "Version of the internal product, each change will create a new\
+          \ version (except change in dates and status)\n"
+      rootProductId:
+        type: "string"
+        description: "Product ID of the root product, in the product tree, represent\
+          \ the top product offer\n"
+      pathToRoot:
+        type: "string"
+        description: "List of products that construct the product tree (comma separated\
+          \ delimited)\n"
+      parentId:
+        type: "string"
+        description: "Product ID of the parent product order in the product tree\n"
+      quantity:
+        type: "integer"
+        description: "Quantity of the products. The quantity refers to non serialized\
+          \ products that are a part of the order.\n"
+      activationDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when the product is set to active. Amdocs Order Management\
+          \ updates this field either on completion of the order or directly in the\
+          \ inventory\n"
+      primaryProductId:
+        type: "string"
+        description: "ID of the primary product. The primary product is the first\
+          \ ancestor that is the business product offering. It is marked in the catalog\
+          \ as primary.\n"
+      relatedParty:
+        type: "array"
+        description: "Party associated with the product, the party has a role which\
+          \ determins its relation to the product (can be 'customer' or 'user')\n"
+        items:
+          $ref: "#/definitions/RelatedPartyCommerce"
+      productCharacteristic:
+        type: "array"
+        description: "List of product specification characteristics. Characteristics\
+          \ of the product to instantiate or to modify.\n"
+        items:
+          $ref: "#/definitions/Characteristic"
+      productOfferingCharacteristic:
+        type: "array"
+        description: "List of product offer characteristics. Characteristics of the\
+          \ product to instantiate or to modify.\n"
+        items:
+          $ref: "#/definitions/Characteristic"
+      priceProduct:
+        type: "array"
+        description: "Relation between the product price and its decedents product\
+          \ prices, which is a product in the inventory on the same doc'\n"
+        items:
+          $ref: "#/definitions/PriceProduct"
+      productRelationship:
+        type: "array"
+        description: "List of product relationships (ProductRelationship [*]). Represents\
+          \ a relationship between products - which potentially holds an entire product\
+          \ object or a product reference.\n"
+        items:
+          $ref: "#/definitions/PriceProductRelationship"
+      message:
+        type: "array"
+        items:
+          $ref: "#/definitions/PriceMessage"
+      promotionAction:
+        type: "array"
+        items:
+          $ref: "#/definitions/PricePromotionAction"
+      productPrice:
+        type: "array"
+        description: "A list of product prices. An amount, usually of money, that\
+          \ represents the actual price paid by a Customer for a purchase, a rent\
+          \ or a lease of a Product. The price is valid for a defined period of time. "
+        items:
+          $ref: "#/definitions/ProductPrice"
+      productTotalPrice:
+        type: "array"
+        description: "The total price to be paid accrodig to the price calculation\
+          \ done in ordering time"
+        items:
+          $ref: "#/definitions/ProductPrice"
+      place:
+        type: "array"
+        description: "The list of useful locations for the product"
+        items:
+          $ref: "#/definitions/RelatedPlaceRefOrValue"
+      billingAccount:
+        $ref: "#/definitions/BillingAccountRef"
+      productOffering:
+        $ref: "#/definitions/ProductOfferingRef"
+      productSpecification:
+        $ref: "#/definitions/ProductSpecificationRef"
+      productTerm:
+        type: "array"
+        description: "term of the product\n"
+        items:
+          $ref: "#/definitions/ProductTerm"
+      characteristicMetadata:
+        type: "array"
+        description: "Characteristics of the product\n"
+        items:
+          $ref: "#/definitions/Metadata"
+      productPromotion:
+        type: "array"
+        description: "List of promotions that the product is related to'\n"
+        items:
+          $ref: "#/definitions/ProductPromotionRef"
+      businessActivity:
+        type: "array"
+        description: "Business Activity include dates that will be used by other system\
+          \ like billing, fulfilment, etc..\n"
+        items:
+          $ref: "#/definitions/BusinessActivity"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+        x-amdocs:
+          refDefinition: "PriceProductExtensions"
+    description: "Product represents the subscription of a ProductOffering or ProductSpecification\
+      \ by a Party playing a PartyRole, such as a Customer. \n"
+  PriceProductRelationship:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        description: "Type of the relation to product (BusinessRelation, Bundle, Composite,\
+          \ EnabledBy)\n"
+      subType:
+        type: "string"
+        description: "Sub type of relation product\n"
+      product:
+        $ref: "#/definitions/ProductRef"
+    description: "The relationship to the product\n"
+  PriceMessage:
+    type: "object"
+    properties:
+      text:
+        type: "string"
+        description: "Localized descriptive validation message\n"
+        readOnly: true
+      type:
+        type: "string"
+        description: "Implementation discriminator\n"
+        readOnly: true
+      parameter:
+        type: "array"
+        description: "Price calculation related message parameters\n"
+        readOnly: true
+        items:
+          $ref: "#/definitions/PriceMessageParameter"
+      severity:
+        type: "string"
+        description: "Severity of the message\n"
+        readOnly: true
+      path:
+        type: "string"
+        description: "Path to the resource part to which the message is related\n"
+        readOnly: true
+    description: "Message related to price calculation\n"
+  PriceMessageParameter:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Parameter name\n"
+        readOnly: true
+      value:
+        type: "array"
+        description: "Paremeter value\n"
+        readOnly: true
+        items:
+          type: "string"
+    description: "Price calculation related message parameter\n"
+  PricePromotionAction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique ID of an existing product\n"
+      name:
+        type: "string"
+        description: "Name of the action\n"
+      description:
+        type: "string"
+        description: "escription of the action\n"
+      actionType:
+        type: "string"
+        description: "Type of the action, such as price alteration\n"
+      actionValue:
+        type: "integer"
+        description: "Action amount\n"
+      immediatePromotionId:
+        type: "string"
+        description: "ID of the promotion to which the action belongs\n"
+      extensions:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+          x-amdocs:
+            refDefinition: "PricePromotionActionextensions"
+    description: "The promotion action of the assigned promotion.\nNote&#58; The duration\
+      \ field is deprecated. Duration moved to the duration policy entity.\n"
+  ExportJobDefinitionRequest:
+    type: "object"
+    properties:
+      resource:
+        type: "string"
+        description: "Entity resource to be exported. possible value: product or productPromotion.\n\
+          Note&#58; The resource must be supplied.\n"
+      topicName:
+        type: "string"
+        description: "Topic to which the data is published.\nNote&#58; The topic must\
+          \ be supplied.\n"
+      operation:
+        type: "string"
+        description: "Operation to perform on the export job. Available actions are\
+          \ *start*, *pause*, *resume* and *delete*.\nNote&#58; If the action is not\
+          \ supplied, the default is *start*.\n"
+      jobDefinitionId:
+        type: "string"
+        description: "Definition name of the job \n"
+      jobInstanceId:
+        type: "string"
+        description: "Instance ID of the job. When trying to issue a command, an existing\
+          \ job must be supplied. For *start*, the instance ID must be null.\n"
+      productParameters:
+        $ref: "#/definitions/ExportParameters"
+    description: "The definition of the export job \n"
+  ExportParameters:
+    type: "object"
+    properties:
+      startDate:
+        type: "string"
+        description: "Start date based on resource document creation date\n"
+      endDate:
+        type: "string"
+        description: "End date based on resource document creation date\n"
+    description: "The parameters for export\n"
+x-dox-DesignDocs:
+- description: "Product Inventory Management\n"
+  url: "https://confluence/display/DEP/Product+Inventory+Management+Subdomain"
