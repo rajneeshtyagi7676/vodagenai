@@ -1,3 +1,5 @@
+Feature: TMF637 Product Inventory Management - resource /product for response code 201 Created
+
 Scenario: TMF637 Product Inventory Management - resource /product for response code 201 Created
     Given with the server api.test.asgw.sol-vf.de for api /productInventoryManagement/v4 and the resource /product
     And for header Accept-Language is set to [HEADER-Accept-Language-PLACEHOLDER]
