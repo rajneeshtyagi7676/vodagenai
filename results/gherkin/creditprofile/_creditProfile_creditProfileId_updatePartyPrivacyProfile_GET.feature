@@ -11,6 +11,6 @@ Scenario: TMF629 Customer Management - resource /creditProfile/{creditProfileId}
   When I send a POST request to /creditProfile/{creditProfileId}/updatePartyPrivacyProfile
   Then the response status code should be 200
   And the response should contain a CreditProfile object
-  And the CreditProfile object should have the required properties: id
-  And the CreditProfile object should have the optional properties: href, creditProfileDate, creditRiskRating, lastUpdate, status, creditScore, characteristic, validFor, relatedPartyRole, relatedCreditParty, partyPrivacyProfile, relatedParty, creditRating, externalIdentifier, extensions
+  And the CreditProfile object should have the required properties: id, href
+  And the CreditProfile object should have the optional properties: creditProfileDate, creditRiskRating, lastUpdate, status, creditScore, characteristic, validFor, relatedPartyRole, relatedCreditParty, partyPrivacyProfile, relatedParty, creditRating, externalIdentifier, extensions
   And the response header Etag should contain [RESPONSE-Etag-PLACEHOLDER]
