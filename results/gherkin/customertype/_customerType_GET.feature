@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /customerType for response code 
   When I send a GET request to /customerType
   Then the response status code should be 200
   And the response should contain an array of CustomerType objects
-  And each CustomerType object should have the required properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, customerType
-  And each CustomerType object should have the optional properties: customerSubType, engagedParty, extensions
+  And each CustomerType object should have the required properties: customerType
+  And each CustomerType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, customerSubType, engagedParty, extensions
   And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
