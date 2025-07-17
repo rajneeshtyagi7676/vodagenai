@@ -25,10 +25,7 @@ public class {creditprofileid}GETTest {
             .get("/creditProfile/{creditProfileId}")
         .then()
             .statusCode(200)
-            .body("$", isA(Map.class))
-            .body("$", isA(List.class))
-            .body("$", isA(List.class))
-            .body("$", isA(List.class));
+            .body("$", isA(Map.class));
     }
         
 }
