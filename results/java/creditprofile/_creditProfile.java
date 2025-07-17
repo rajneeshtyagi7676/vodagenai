@@ -29,8 +29,6 @@ public class CreditprofileGETTest {
             .get("/creditProfile")
         .then()
             .statusCode(200)
-            .body("$", isA(List.class))
-            .body("$", isA(List.class))
             .body("$", isA(List.class));
     }
         
