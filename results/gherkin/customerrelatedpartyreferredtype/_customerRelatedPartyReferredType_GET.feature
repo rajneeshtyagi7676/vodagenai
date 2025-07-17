@@ -1,3 +1,5 @@
+Feature: TMF629 Customer Management - resource /customerRelatedPartyReferredType for response code 200 OK
+
 Scenario: TMF629 Customer Management - resource /customerRelatedPartyReferredType for response code 200 OK
   Given with the server api.test.asgw.sol-vf.de for api /customerManagement/v1 and the resource /customerRelatedPartyReferredType
   And for header Accept-Language is set to [HEADER-Accept-Language-PLACEHOLDER]
