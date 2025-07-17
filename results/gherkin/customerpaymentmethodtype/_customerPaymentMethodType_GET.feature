@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /customerPaymentMethodType for r
   When I send a GET request to /customerPaymentMethodType
   Then the response status code should be 200
   And the response should contain an array of CustomerPaymentMethodType objects
-  And each CustomerPaymentMethodType object should have the required properties: @type
-  And each CustomerPaymentMethodType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, customerPaymentMethodType, extensions
+  And each CustomerPaymentMethodType object should have the required properties: customerPaymentMethodType
+  And each CustomerPaymentMethodType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, extensions
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
