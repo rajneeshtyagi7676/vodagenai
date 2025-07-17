@@ -5,7 +5,7 @@ info:
    
    ASGW release number - 1.0.1.1
   version: 1.0.1
-  title: TMF629 Customer Management
+  title: TMF629 Customer Managements
 host: "api.test.asgw.sol-vf.de"
 basePath: /customerManagement/v1
 tags:
