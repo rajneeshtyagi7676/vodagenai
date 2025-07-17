@@ -11,9 +11,12 @@ Scenario: TMF629 Customer Management - resource /archive/customer/{customerId} f
   And the response should contain a Customer object
   And the Customer object should have the required properties: id, name, status
   And the Customer object should have the optional properties: href, statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium, createdOn, lastModifiedOn, @baseType, @type, @schemaLocation, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions
-  And the Customer object engagedParty should have the properties: type, refType, id, href, description, @referredType
-  And the Customer object relatedParty should have the properties: id, href, name, role, @baseType, @schemaLocation, @type, @referredType, validFor
-  And the Customer object account should have the properties: id, href, name, description, type, preferred, refType, ratingType
-  And the Customer object paymentMethod should have the properties: id, href, name, type, preferred, validFor
-  And the Customer object creditProfile should have the properties: id, href, creditProfileDate, creditRiskRating, lastUpdate, status, creditScore, characteristic, validFor, relatedPartyRole, relatedCreditParty, partyPrivacyProfile, relatedParty, creditRating, externalIdentifier, extensions
-  And the Customer object contactMedium should have the properties: id, type, mediumType, preferred, validFor, characteristic, @baseType, @schemaLocation, extensions
+  And the Customer object engagedParty should contain a PartyRefOrValue object
+  And the Customer object relatedParty should contain an array of RelatedPartyRef objects
+  And the Customer object account should contain an array of AccountRefOrValue objects
+  And the Customer object paymentMethod should contain an array of PaymentMethodRef objects
+  And the Customer object creditProfile should contain an array of CreditProfile objects
+  And the Customer object contactMedium should contain an array of ContactMedium objects
+  And the Customer object characteristic should contain an array of Characteristic objects
+  And the Customer object externalIdentifier should contain an array of ExternalIdentifier objects
+  And the Customer object agreement should contain an array of AgreementRef objects
