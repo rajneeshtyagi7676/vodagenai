@@ -2,19 +2,19 @@ Feature: TMF637 Product Inventory Management - resource /product for response co
 
 Scenario: TMF637 Product Inventory Management - resource /product for response code 200 OK
   Given with the server api.test.asgw.sol-vf.de for api /productInventoryManagement/v4 and the resource /product
-  And for header Accept-Language is set to [HEADER-Accept-Language-PLACEHOLDER]
+  And for header Accept-Language is set to [HEADER-ACCEPT-LANGUAGE-PLACEHOLDER]
   And valid Bearer authorization token
-  And for query filter is set to [QUERY-filter-PLACEHOLDER]
-  And for query replacableProductOfferingId is set to [QUERY-replacableProductOfferingId-PLACEHOLDER]
-  And for query productEnabledByProductId is set to [QUERY-productEnabledByProductId-PLACEHOLDER]
-  And for query offset is set to [QUERY-offset-PLACEHOLDER]
-  And for query limit is set to [QUERY-limit-PLACEHOLDER]
-  And for query after is set to [QUERY-after-PLACEHOLDER]
-  And for query searchAfterStrategy is set to [QUERY-searchAfterStrategy-PLACEHOLDER]
-  And for query calculatePrice is set to [QUERY-calculatePrice-PLACEHOLDER]
-  And for query calculateTax is set to [QUERY-calculateTax-PLACEHOLDER]
-  And for query mask is set to [QUERY-mask-PLACEHOLDER]
-  And for query returnTotalCount is set to [QUERY-returnTotalCount-PLACEHOLDER]
+  And for query filter is set to [QUERY-FILTER-PLACEHOLDER]
+  And for query replacableProductOfferingId is set to [QUERY-REPLACABLEPRODUCTOFFERINGID-PLACEHOLDER]
+  And for query productEnabledByProductId is set to [QUERY-PRODUCTENABLEDBYPRODUCTID-PLACEHOLDER]
+  And for query offset is set to [QUERY-OFFSET-PLACEHOLDER]
+  And for query limit is set to [QUERY-LIMIT-PLACEHOLDER]
+  And for query after is set to [QUERY-AFTER-PLACEHOLDER]
+  And for query searchAfterStrategy is set to [QUERY-SEARCHAFTERSTRATEGY-PLACEHOLDER]
+  And for query calculatePrice is set to [QUERY-CALCULATEPRICE-PLACEHOLDER]
+  And for query calculateTax is set to [QUERY-CALCULATETAX-PLACEHOLDER]
+  And for query mask is set to [QUERY-MASK-PLACEHOLDER]
+  And for query returnTotalCount is set to [QUERY-RETURNTOTALCOUNT-PLACEHOLDER]
   When I send a GET request to /product
   Then the response status code should be 200
   And the response should contain an array of Product objects
