@@ -12,6 +12,7 @@ Scenario: TMF629 Customer Management - resource /customer/{customerId}/postalAdd
   Then the response status code should be 200
   And the response should contain an array of MediumCharacteristic objects
   And the response header Etag should contain [RESPONSE-Etag-PLACEHOLDER]
-  And each MediumCharacteristic object should have the optional properties: type, contactType, emailAddress, number, faxNumber, phoneNumber, socialNetworkId, city, country, postCode, stateOrProvince, street1, street2, place, @baseType, @schemaLocation, extensions
-  And if place is present, it should have the properties: id, @referredType, @type, subPlace
-  And if subPlace is present, it should have the properties: id, @referredType, @type
+  And each MediumCharacteristic object should have the optional properties: type, contactType, emailAddress, faxNumber, phoneNumber, socialNetworkId, city, country, postCode, stateOrProvince, street1, street2, place, @baseType, @schemaLocation, extensions
+  And if place is present, it should contain the properties: id, @referredType, @type, subPlace
+  And if subPlace is present, it should contain the properties: id, @referredType, @type
+  And if extensions is present, it should contain the properties: streetName, streetNumber, verificationStatus, additionalNumber, additional1, additional2, geographicAddressType
