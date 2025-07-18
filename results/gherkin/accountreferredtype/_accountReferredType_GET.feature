@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /accountReferredType for respons
   When I send a GET request to /accountReferredType
   Then the response status code should be 200
   And the response should contain an array of AccountReferredType objects
-  And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
   And each AccountReferredType object should have the required properties: accountReferredType
-  And each AccountReferredType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type', extensions
+  And each AccountReferredType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, extensions
+  And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
