@@ -17,25 +17,15 @@ public class ProductGETTest {
     
     
     @Test
-    public void TMF637ProductInventoryManagementresource/productforresponsecode200OK() {
+    public void TMF637ProductInventoryManagementresource/productforresponsecode201Created() {
         given()
             .contentType(ContentType.JSON)
-            .queryParam("filter", "test_value")
-            .queryParam("replacableProductOfferingId", "test_value")
-            .queryParam("productEnabledByProductId", "test_value")
-            .queryParam("offset", "test_value")
-            .queryParam("limit", "test_value")
-            .queryParam("after", "test_value")
-            .queryParam("searchAfterStrategy", "test_value")
-            .queryParam("calculatePrice", "test_value")
-            .queryParam("calculateTax", "test_value")
-            .queryParam("mask", "test_value")
-            .queryParam("returnTotalCount", "test_value")
+            
         .when()
             .get("/product")
         .then()
-            .statusCode(200)
-            .body("$", isA(List.class));
+            .statusCode(201)
+            .body("$", isA(Map.class));
     }
         
 }
