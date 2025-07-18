@@ -28,7 +28,8 @@ public class HistoryGETTest {
             .get("/customer/{customerId}/history")
         .then()
             .statusCode(200)
-            .body("$", isA(List.class));
+            .body("$", isA(List.class))
+            .body("$", isA(Map.class));
     }
         
 }
