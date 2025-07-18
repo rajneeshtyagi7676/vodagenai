@@ -17,14 +17,14 @@ public class ProductGETTest {
     
     
     @Test
-    public void TMF637ProductInventoryManagementresource/productforresponsecode200OK() {
+    public void TMF637ProductInventoryManagementresource/productforresponsecode201Created() {
         given()
             .contentType(ContentType.JSON)
             
         .when()
             .get("/product")
         .then()
-            .statusCode(200)
+            .statusCode(201)
             .body("$", isA(Map.class));
     }
         
