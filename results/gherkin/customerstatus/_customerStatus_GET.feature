@@ -15,5 +15,5 @@ Scenario: TMF629 Customer Management - resource /customerStatus for response cod
   Then the response status code should be 200
   And the response should contain an array of CustomerStatus objects
   And each CustomerStatus object should have the required properties: customerStatus
-  And each CustomerStatus object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type', transitionToStatus, statusChangeReason, extensions
+  And each CustomerStatus object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, transitionToStatus, statusChangeReason, extensions
   And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
