@@ -2,6 +2,7 @@ Feature: TMF637 Product Inventory Management - resource /productPromotion for re
 
 Scenario: TMF637 Product Inventory Management - resource /productPromotion for response code 200 OK
   Given with the server api.test.asgw.sol-vf.de for api /productInventoryManagement/v4 and the resource /productPromotion
+  And for header Accept is set to [HEADER-ACCEPT-PLACEHOLDER]
   And valid Bearer authorization token
   And for query filter is set to [QUERY-FILTER-PLACEHOLDER]
   And for query status is set to [QUERY-STATUS-PLACEHOLDER]
