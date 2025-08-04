@@ -37,13 +37,13 @@ public class CalculatenextpossibleterminationdateGETTest {
             .body("id", notNullValue());
     }
         
-    
+
     // Test data builder helper class
     private static class TestDataBuilder {
         public static String createValidRequest() {
             return "{"name": "test", "type": "valid"}";
         }
-        
+
         public static String createMinimalRequest() {
             return "{}";
         }
