@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Postaladdress GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:10:46.253783
+ * Generated at: 2025-08-08T09:28:49.454942
  */
 public class PostaladdressGETTest {
 
@@ -40,7 +40,8 @@ public class PostaladdressGETTest {
             .body("size()", greaterThan(0))
             .body("id", notNullValue())
             .body("id", notNullValue())
-            .body("id", notNullValue());
+            .body("id", notNullValue())
+            .body("name", notNullValue());
     }
         
 
