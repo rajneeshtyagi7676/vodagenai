@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Customerrelatedpartytype GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:39:00.637631
+ * Generated at: 2025-08-08T17:39:21.071560
  */
 public class CustomerrelatedpartytypeGETTest {
 
@@ -26,21 +26,15 @@ public class CustomerrelatedpartytypeGETTest {
 
     
     @Test
-    public void TMF629CustomerManagementresource/customerRelatedPartyTypeforresponsecode200OK() {
+    public void TMF637ProductInventoryManagementresource/customerRelatedPartyTypeforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            .queryParam("salesChannel", "test_value")
-            .queryParam("fields", "test_value")
-            .queryParam("include", "test_value")
-            .queryParam("isDefault", "test_value")
-            .queryParam("sort", "test_value")
-            .queryParam("customerRelatedPartyType", "test_value")
+            
         .when()
             .get("/customerRelatedPartyType")
         .then()
             .statusCode(200)
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0));
+            .body("$", notNullValue());
     }
         
 
