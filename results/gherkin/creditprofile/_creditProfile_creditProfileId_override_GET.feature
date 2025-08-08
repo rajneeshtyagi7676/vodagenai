@@ -5,8 +5,8 @@ Scenario: TMF629 Customer Management - resource /creditProfile/{creditProfileId}
   And for header Accept-Language is set to [HEADER-ACCEPT-LANGUAGE-PLACEHOLDER]
   And for header If-Match is set to [HEADER-IF-MATCH-PLACEHOLDER]
   And valid Bearer authorization token
-  And for query salesChannel is set to [QUERY-SALESCHANNEL-PLACEHOLDER]
   And for path creditProfileId is set to [PATH-CREDITPROFILEID-PLACEHOLDER]
+  And for query salesChannel is set to [QUERY-SALESCHANNEL-PLACEHOLDER]
   And for body overrideCreditProfileCharacteristic is set to [BODY-OVERRIDECREDITPROFILECHARACTERISTIC-PLACEHOLDER]
   When I send a POST request to /creditProfile/{creditProfileId}/override
   Then the response status code should be 200
