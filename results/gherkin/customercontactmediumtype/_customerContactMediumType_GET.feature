@@ -13,6 +13,7 @@ Scenario: TMF629 Customer Management - resource /customerContactMediumType for r
   When I send a GET request to /customerContactMediumType
   Then the response status code should be 200
   And the response should contain an array of CustomerContactMediumType objects
-  And each CustomerContactMediumType object should have the required properties: customerContactMediumType
-  And each CustomerContactMediumType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type', mediumType
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
+  And each CustomerContactMediumType object should have the required properties: customerContactMediumType, mediumType
+  And each CustomerContactMediumType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type'
+  And each mediumType array item should have the properties: mediumType, href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type'
