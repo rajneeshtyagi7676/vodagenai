@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Manageexternalidentifier GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:36:35.239294
+ * Generated at: 2025-08-08T08:57:43.164367
  */
 public class ManageexternalidentifierGETTest {
 
