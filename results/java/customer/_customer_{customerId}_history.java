@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for History GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:17:37.642511
+ * Generated at: 2025-08-08T08:31:35.464450
  */
 public class HistoryGETTest {
 
@@ -40,7 +40,8 @@ public class HistoryGETTest {
             .body("$", isA(List.class))
             .body("size()", greaterThan(0))
             .body("id", notNullValue())
-            .body("id", notNullValue());
+            .body("id", notNullValue())
+            .body("$", isA(Map.class));
     }
         
 
