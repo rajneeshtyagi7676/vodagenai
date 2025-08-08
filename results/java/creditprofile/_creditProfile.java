@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Creditprofile GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:36:34.483891
+ * Generated at: 2025-08-08T08:36:35.577982
  */
 public class CreditprofileGETTest {
 
@@ -30,21 +30,14 @@ public class CreditprofileGETTest {
         given()
             .contentType(ContentType.JSON)
             .queryParam("salesChannel", "test_value")
-            .queryParam("filter", "test_value")
-            .queryParam("filters", "test_value")
-            .queryParam("fields", "test_value")
-            .queryParam("sort", "test_value")
+            .queryParam("forceCreditInquiry", "test_value")
         .when()
             .get("/creditProfile")
         .then()
             .statusCode(200)
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0))
+            .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0))
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0));
+            .body("id", notNullValue());
     }
         
 
