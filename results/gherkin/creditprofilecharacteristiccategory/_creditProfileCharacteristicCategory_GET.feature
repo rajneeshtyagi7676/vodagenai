@@ -16,4 +16,4 @@ Scenario: TMF629 Customer Management - resource /creditProfileCharacteristicCate
   And the response should contain an array of CreditProfileCharacteristicCategory objects
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
   And each CreditProfileCharacteristicCategory object should have the required properties: creditProfileCharacteristicCategory
-  And each CreditProfileCharacteristicCategory object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, extensions
+  And each CreditProfileCharacteristicCategory object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type
