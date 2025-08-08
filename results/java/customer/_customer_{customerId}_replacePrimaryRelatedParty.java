@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Replaceprimaryrelatedparty GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:36:05.806346
+ * Generated at: 2025-08-08T08:57:42.389000
  */
 public class ReplaceprimaryrelatedpartyGETTest {
 
