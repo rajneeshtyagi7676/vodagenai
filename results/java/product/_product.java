@@ -25,18 +25,18 @@ public class ProductGETTest {
 
     
     @Test
-    public void TMF637ProductInventoryManagementresource/productforresponsecode201Created() {
+    public void TMF637ProductInventoryManagementresource/productforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
             
         .when()
             .get("/product")
         .then()
-            .statusCode(201)
+            .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("id", notNullValue())
-            .body("name", notNullValue());
+            .body("name", notNullValue())
+            .body("id", notNullValue());
     }
         
 
