@@ -10,4 +10,4 @@ Scenario: TMF629 Customer Management - resource /creditProfile/generateID for re
     Then the response status code should be 200
     And the response should contain an array of EntityRef objects
     And each EntityRef object should have the required properties: id
-    And each EntityRef object should have the optional properties: href, name, @referredType
+    And each EntityRef object should have the optional properties: href, name
