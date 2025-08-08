@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Customertype GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:38:56.709323
+ * Generated at: 2025-08-08T17:38:59.295202
  */
 public class CustomertypeGETTest {
 
@@ -25,24 +25,6 @@ public class CustomertypeGETTest {
     }
 
     
-    @Test
-    public void TMF629CustomerManagementresource/customerTypeforresponsecode200OK() {
-        given()
-            .contentType(ContentType.JSON)
-            .queryParam("salesChannel", "test_value")
-            .queryParam("fields", "test_value")
-            .queryParam("include", "test_value")
-            .queryParam("isDefault", "test_value")
-            .queryParam("sort", "test_value")
-            .queryParam("customerType", "test_value")
-        .when()
-            .get("/customerType")
-        .then()
-            .statusCode(200)
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0));
-    }
-        
 
     // Test data builder helper class
     private static class TestDataBuilder {
