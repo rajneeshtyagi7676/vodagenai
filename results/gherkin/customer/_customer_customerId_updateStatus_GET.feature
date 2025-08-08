@@ -11,6 +11,6 @@ Scenario: TMF629 Customer Management - resource /customer/{customerId}/updateSta
     When I send a POST request to /customer/{customerId}/updateStatus
     Then the response status code should be 200
     And the response should contain a Customer object
+    And the response header Etag should contain [RESPONSE-Etag-PLACEHOLDER]
     And the Customer object should have the required properties: id, status
     And the Customer object should have the optional properties: href, name, statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium, createdOn, lastModifiedOn, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions
-    And the response header Etag should contain [RESPONSE-Etag-PLACEHOLDER]
