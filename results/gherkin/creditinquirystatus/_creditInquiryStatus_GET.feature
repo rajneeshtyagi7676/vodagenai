@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /creditInquiryStatus for respons
   When I send a GET request to /creditInquiryStatus
   Then the response status code should be 200
   And the response should contain an array of CreditInquiryStatus objects
-  And each CreditInquiryStatus object should have the required properties: creditInquiryStatus
-  And each CreditInquiryStatus object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, transitionToStatus
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
+  And each CreditInquiryStatus object should have the required properties: creditInquiryStatus
+  And each CreditInquiryStatus object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, transitionToStatus, creditInquiryResult
