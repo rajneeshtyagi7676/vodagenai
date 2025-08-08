@@ -11,7 +11,6 @@ Scenario: TMF629 Customer Management - resource /creditProfile/{creditProfileId}
   When I send a GET request to /creditProfile/{creditProfileId}/overrideHistory
   Then the response status code should be 200
   And the response should contain an OverrideHistory object
-  And the OverrideHistory object should have the required property: creditProfileId
-  And the OverrideHistory object should have the required property: overrideRecord
-  And each overrideRecord should have the required properties: id, characteristicId, oldValue, newValue, overrideReason, activityDate, relatedParty
-  And each relatedParty in overrideRecord should have the required properties: id, href, name, role
+  And the OverrideHistory object should have the required properties: creditProfileId, overrideRecord
+  And each overrideRecord in the OverrideHistory object should have the required properties: id, characteristicId, oldValue, newValue, overrideReason, activityDate, relatedParty
+  And each relatedParty in the overrideRecord should have the required properties: id, href, name, role
