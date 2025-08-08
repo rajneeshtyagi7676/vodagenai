@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Characteristicvaluetype GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:36:20.517396
+ * Generated at: 2025-08-08T09:29:09.421022
  */
 public class CharacteristicvaluetypeGETTest {
 
