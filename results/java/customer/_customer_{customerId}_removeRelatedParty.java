@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Removerelatedparty GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:57:48.243610
+ * Generated at: 2025-08-08T17:39:08.124400
  */
 public class RemoverelatedpartyGETTest {
 
@@ -26,18 +26,17 @@ public class RemoverelatedpartyGETTest {
 
     
     @Test
-    public void TMF629CustomerManagementresource/customer/{customerId}/removeRelatedPartyforresponsecode200OK() {
+    public void TMF637ProductInventoryManagementresource/customer/{customerId}/removeRelatedPartyforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            .queryParam("salesChannel", "test_value")
+            
         .when()
             .get("/customer/{customerId}/removeRelatedParty")
         .then()
             .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("name", notNullValue())
-            .body("id", notNullValue());
+            .body("name", notNullValue());
     }
         
 
