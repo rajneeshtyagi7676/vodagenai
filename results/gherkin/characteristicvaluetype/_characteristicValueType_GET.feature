@@ -14,4 +14,6 @@ Scenario: TMF629 Customer Management - resource /characteristicValueType for res
   When I send a GET request to /characteristicValueType
   Then the response status code should be 200
   And the response should contain an array of CharacteristicValueType objects
+  And each CharacteristicValueType object should have the required properties: characteristicValueType
+  And each CharacteristicValueType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
