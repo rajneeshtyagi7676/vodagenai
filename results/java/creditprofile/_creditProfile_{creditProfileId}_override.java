@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Override GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:46:24.351019
+ * Generated at: 2025-08-08T17:36:42.326735
  */
 public class OverrideGETTest {
 
@@ -36,7 +36,10 @@ public class OverrideGETTest {
             .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("id", notNullValue());
+            .body("id", notNullValue())
+            .body("name", notNullValue())
+            .body("id", notNullValue())
+            .body("name", notNullValue());
     }
         
 
