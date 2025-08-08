@@ -9,5 +9,5 @@ Scenario: TMF629 Customer Management - resource /archive/customer/{customerId} f
   When I send a GET request to /archive/customer/{customerId}
   Then the response status code should be 200
   And the response should contain a Customer object
-  And the Customer object should have the required properties: id, name, status
-  And the Customer object should have the optional properties: href, statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions, createdOn, lastModifiedOn, @baseType, @type, @schemaLocation
+  And the Customer object should have the required properties: id, engagedParty
+  And the Customer object should have the optional properties: href, name, status, statusReason, statusDate, validFor, characteristic, relatedParty, account, paymentMethod, creditProfile, contactMedium, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions, createdOn, lastModifiedOn, @baseType, @type, @schemaLocation
