@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Updatepartyprivacyprofile GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:57:22.767905
+ * Generated at: 2025-08-08T09:46:28.241131
  */
 public class UpdatepartyprivacyprofileGETTest {
 
@@ -35,6 +35,7 @@ public class UpdatepartyprivacyprofileGETTest {
         .then()
             .statusCode(200)
             .body("$", isA(Map.class))
+            .body("id", notNullValue())
             .body("id", notNullValue());
     }
         
