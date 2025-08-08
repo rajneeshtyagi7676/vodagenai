@@ -11,5 +11,4 @@ Scenario: TMF629 Customer Management - resource /customer/{customerId}/relatedIn
   Then the response status code should be 200
   And the response should contain an array of IndividualInvolvement objects
   And each IndividualInvolvement object should have the required properties: id, givenName, familyName, status, involvement
-  And each IndividualInvolvement object's involvement should be an array of Involvement objects
-  And each Involvement object should have the properties: id, entityType, individualRole
+  And each involvement array item should have the properties: id, entityType, individualRole
