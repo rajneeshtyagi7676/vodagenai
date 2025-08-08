@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Creditinquiryrelatedpartyreferredtyperole GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:37:08.594763
+ * Generated at: 2025-08-08T09:57:12.671406
  */
 public class CreditinquiryrelatedpartyreferredtyperoleGETTest {
 
