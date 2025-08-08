@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Creditprofileoverriderelatedpartyrolereferredtyperole GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:58:31.101181
+ * Generated at: 2025-08-08T17:37:12.007935
  */
 public class CreditprofileoverriderelatedpartyrolereferredtyperoleGETTest {
 
