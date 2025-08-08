@@ -13,4 +13,4 @@ Scenario: TMF629 Customer Management - resource /customer/{customerId}/addPostal
     And the response should contain a Customer object
     And the response header Etag should contain [RESPONSE-Etag-PLACEHOLDER]
     And the Customer object should have the required properties: id, href, name, status
-    And the Customer object should have the optional properties: createdOn, lastModifiedOn, @baseType, @type, @schemaLocation, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions, statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium
+    And the Customer object should have the optional properties: createdOn, lastModifiedOn, '@baseType', '@type', '@schemaLocation', customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions, statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium
