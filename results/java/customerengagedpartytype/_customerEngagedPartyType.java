@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Customerengagedpartytype GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:29:18.799027
+ * Generated at: 2025-08-08T09:46:31.830713
  */
 public class CustomerengagedpartytypeGETTest {
 
