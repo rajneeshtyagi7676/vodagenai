@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Generateid GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:38:45.335678
+ * Generated at: 2025-08-08T17:38:50.205471
  */
 public class GenerateidGETTest {
 
@@ -25,22 +25,6 @@ public class GenerateidGETTest {
     }
 
     
-    @Test
-    public void TMF629CustomerManagementresource/customer/generateIDforresponsecode200OK() {
-        given()
-            .contentType(ContentType.JSON)
-            .queryParam("salesChannel", "test_value")
-            .queryParam("limit", "test_value")
-        .when()
-            .get("/customer/generateID")
-        .then()
-            .statusCode(200)
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0))
-            .body("id", notNullValue())
-            .body("name", notNullValue());
-    }
-        
 
     // Test data builder helper class
     private static class TestDataBuilder {
