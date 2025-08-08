@@ -16,6 +16,6 @@ Scenario: TMF629 Customer Management - resource /referenceDataList/{listName} fo
   When I send a GET request to /referenceDataList/{listName}
   Then the response status code should be 200
   And the response should contain an array of ReferenceDataList objects
-  And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
   And each ReferenceDataList object should have the required properties: @type
   And each ReferenceDataList object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, name, extensions, referenceDataList
+  And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
