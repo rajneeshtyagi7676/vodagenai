@@ -18,7 +18,7 @@ Scenario: TMF629 Customer Management - resource /customer for response code 200 
   Then the response status code should be 200
   And the response should contain an array of Customer objects
   And each Customer object should have the required properties: id, href, name, status
-  And each Customer object should have the optional properties: statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions
+  And each Customer object should have the optional properties: statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions, createdOn, lastModifiedOn, @baseType, @type, @schemaLocation
   And the response header Etag should contain [RESPONSE-Etag-PLACEHOLDER]
   And the response header X-Total-Count should contain [RESPONSE-X-Total-Count-PLACEHOLDER]
   And the response header X-Result-Count should contain [RESPONSE-X-Result-Count-PLACEHOLDER]
