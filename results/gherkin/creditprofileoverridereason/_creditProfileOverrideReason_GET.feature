@@ -15,5 +15,5 @@ Scenario: TMF629 Customer Management - resource /creditProfileOverrideReason for
   Then the response status code should be 200
   And the response should contain an array of CreditProfileOverrideReason objects
   And each CreditProfileOverrideReason object should have the required properties: @type
-  And each CreditProfileOverrideReason object should have the optional properties: creditProfileOverrideReason, extensions, active, default, fullLabelDisplay, href, selectionDisplay, shortLabelDisplay
+  And each CreditProfileOverrideReason object should have the optional properties: active, default, fullLabelDisplay, href, selectionDisplay, shortLabelDisplay, creditProfileOverrideReason, extensions
   And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
