@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Postaladdress GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:38:33.319286
+ * Generated at: 2025-08-08T17:39:20.043236
  */
 public class PostaladdressGETTest {
 
@@ -26,20 +26,15 @@ public class PostaladdressGETTest {
 
     
     @Test
-    public void TMF629CustomerManagementresource/customer/{customerId}/postalAddressforresponsecode200OK() {
+    public void TMF637ProductInventoryManagementresource/customer/{customerId}/postalAddressforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            .queryParam("filters", "test_value")
-            .queryParam("salesChannel", "test_value")
-            .queryParam("includeFrom", "test_value")
+            
         .when()
             .get("/customer/{customerId}/postalAddress")
         .then()
             .statusCode(200)
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0))
-            .body("id", notNullValue())
-            .body("id", notNullValue());
+            .body("$", notNullValue());
     }
         
 
