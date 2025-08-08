@@ -12,6 +12,7 @@ Scenario: TMF629 Customer Management - resource /creditProfile for response code
   When I send a GET request to /creditProfile
   Then the response status code should be 200
   And the response should contain an array of CreditProfile objects
-  And each CreditProfile object should have the optional properties: id, href, creditProfileDate, creditRiskRating, lastUpdate, status, creditScore, characteristic, validFor, relatedPartyRole, relatedCreditParty, partyPrivacyProfile, relatedParty, creditRating, externalIdentifier, extensions
-  And each CreditProfile characteristic should have the optional properties: id, name, value, valueType, category, overridden
-  And each CreditProfile creditRating should have the optional properties: id, ratingScore, creditRiskRating, ratingAgencyName, ratingAgencyType, ratingReference, primary, validFor, characteristic, extensions
+  And each CreditProfile object should have the optional properties: characteristic, creditProfileDate, creditRating, creditRiskRating, creditScore, extensions, externalIdentifier, href, id, lastUpdate, partyPrivacyProfile, relatedCreditParty, relatedParty, relatedPartyRole, status, validFor
+  And each CreditProfile characteristic should have the optional properties: category, id, name, overridden, value, valueType
+  And each CreditProfile creditRating should have the optional properties: characteristic, creditRiskRating, extensions, id, primary, ratingAgencyName, ratingAgencyType, ratingReference, ratingScore, validFor
+  And each CreditProfile externalIdentifier should have the optional properties: extensions, externalIdentifierType, id, owner, version
