@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Generateid GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:57:36.313560
+ * Generated at: 2025-08-08T09:10:44.251612
  */
 public class GenerateidGETTest {
 
