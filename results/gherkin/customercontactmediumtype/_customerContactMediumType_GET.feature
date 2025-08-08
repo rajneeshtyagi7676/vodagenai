@@ -16,4 +16,6 @@ Scenario: TMF629 Customer Management - resource /customerContactMediumType for r
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
   And each CustomerContactMediumType object should have the required properties: customerContactMediumType, mediumType
   And each CustomerContactMediumType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type'
-  And each mediumType array item should have the properties: mediumType, href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type'
+  And each mediumType array should contain at least one MediumType object
+  And each MediumType object should have the required properties: mediumType
+  And each MediumType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type'
