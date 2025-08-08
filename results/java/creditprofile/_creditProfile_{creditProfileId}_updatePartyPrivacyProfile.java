@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Updatepartyprivacyprofile GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:57:16.855622
+ * Generated at: 2025-08-08T17:38:37.759243
  */
 public class UpdatepartyprivacyprofileGETTest {
 
