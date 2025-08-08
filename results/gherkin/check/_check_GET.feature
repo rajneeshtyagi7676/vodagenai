@@ -7,5 +7,5 @@ Scenario: TMF629 Customer Management - resource /check for response code 200 OK
     When I send a GET request to /check
     Then the response status code should be 200
     And the response should indicate the API is operational
-    And the response should contain service version information
-    And the response should contain service status details
+    And the response should contain service status information
+    And the response should include version information matching 1.0.1
