@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /creditProfileRelatedPartyReferr
   When I send a GET request to /creditProfileRelatedPartyReferredType
   Then the response status code should be 200
   And the response should contain an array of CreditProfileRelatedPartyReferredType objects
-  And each CreditProfileRelatedPartyReferredType object should have the required properties: creditProfileRelatedPartyReferredType
-  And each CreditProfileRelatedPartyReferredType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, creditProfileRelatedPartyReferredTypeRole
+  And each CreditProfileRelatedPartyReferredType object should have the required properties: @type
+  And each CreditProfileRelatedPartyReferredType object should have the optional properties: active, default, fullLabelDisplay, href, selectionDisplay, shortLabelDisplay, creditProfileRelatedPartyReferredType, creditProfileRelatedPartyReferredTypeRole, extensions
   And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
