@@ -5,7 +5,7 @@ Scenario: TMF629 Customer Management - resource /customerContactMediumType/{cust
   And for header Accept-Language is set to [HEADER-ACCEPT-LANGUAGE-PLACEHOLDER]
   And for header If-Modified-Since is set to [HEADER-IF-MODIFIED-SINCE-PLACEHOLDER]
   And valid Bearer authorization token
-  And for path customerContactMediumType is set to [PATH-CUSTOMERCOUNTACTMEDIUMTYPE-PLACEHOLDER]
+  And for path customerContactMediumType is set to [PATH-CUSTOMERCONTACTMEDIUMTYPE-PLACEHOLDER]
   And for query salesChannel is set to [QUERY-SALESCHANNEL-PLACEHOLDER]
   And for query fields is set to [QUERY-FIELDS-PLACEHOLDER]
   And for query include is set to [QUERY-INCLUDE-PLACEHOLDER]
