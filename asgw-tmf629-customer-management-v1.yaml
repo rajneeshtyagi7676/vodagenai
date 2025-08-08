@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: |
-   This API manages the customers resources. It enables the retrieval of customer along with engaged party, related part, accounts, payment method and credit profile.  In addition, the API enables to create, delete, and modify customer.
+   This API manages the customer resources. It enables the retrieval of customer along with engaged party, related part, accounts, payment method and credit profile.  In addition, the API enables to create, delete, and modify customer.
    
    ASGW release number - 1.0.1.1
   version: 1.0.1
