@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /customerRelatedPartyReferredTyp
   When I send a GET request to /customerRelatedPartyReferredType
   Then the response status code should be 200
   And the response should contain an array of CustomerRelatedPartyReferredType objects
-  And each CustomerRelatedPartyReferredType object should have the required properties: customerRelatedPartyReferredType
-  And each CustomerRelatedPartyReferredType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type', customerRelatedPartyReferredTypeRole
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
+  And each CustomerRelatedPartyReferredType object should have the required properties: customerRelatedPartyReferredType
+  And each CustomerRelatedPartyReferredType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, customerRelatedPartyReferredTypeRole
