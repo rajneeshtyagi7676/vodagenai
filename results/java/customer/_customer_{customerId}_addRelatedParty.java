@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Addrelatedparty GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:57:31.279171
+ * Generated at: 2025-08-08T17:39:03.652567
  */
 public class AddrelatedpartyGETTest {
 
@@ -26,18 +26,17 @@ public class AddrelatedpartyGETTest {
 
     
     @Test
-    public void TMF629CustomerManagementresource/customer/{customerId}/addRelatedPartyforresponsecode200OK() {
+    public void TMF637ProductInventoryManagementresource/customer/{customerId}/addRelatedPartyforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            .queryParam("salesChannel", "test_value")
+            
         .when()
             .get("/customer/{customerId}/addRelatedParty")
         .then()
             .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("name", notNullValue())
-            .body("id", notNullValue());
+            .body("name", notNullValue());
     }
         
 
