@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for {creditprofileid} GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:57:40.697425
+ * Generated at: 2025-08-08T09:29:22.890921
  */
 public class {creditprofileid}GETTest {
 
@@ -35,7 +35,21 @@ public class {creditprofileid}GETTest {
         .then()
             .statusCode(200)
             .body("$", isA(Map.class))
-            .body("id", notNullValue());
+            .body("id", notNullValue())
+            .body("$", isA(List.class))
+            .body("size()", greaterThan(0))
+            .body("id", notNullValue())
+            .body("id", notNullValue())
+            .body("name", notNullValue())
+            .body("id", notNullValue())
+            .body("name", notNullValue())
+            .body("id", notNullValue())
+            .body("$", isA(List.class))
+            .body("size()", greaterThan(0))
+            .body("$", isA(List.class))
+            .body("size()", greaterThan(0))
+            .body("$", isA(List.class))
+            .body("size()", greaterThan(0));
     }
         
 
