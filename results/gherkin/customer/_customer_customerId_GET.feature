@@ -11,6 +11,6 @@ Scenario: TMF629 Customer Management - resource /customer/{customerId} for respo
   When I send a PATCH request to /customer/{customerId}
   Then the response status code should be 200
   And the response should contain a Customer object
-  And the Customer object should have the required properties: id, status
-  And the Customer object should have the optional properties: href, name, statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium, createdOn, lastModifiedOn, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions
   And the response header Etag should contain [RESPONSE-Etag-PLACEHOLDER]
+  And the Customer object should have the required properties: id, href, name, status
+  And the Customer object should have the optional properties: statusReason, statusDate, validFor, characteristic, engagedParty, relatedParty, account, paymentMethod, creditProfile, contactMedium, customerType, customerSubType, acquisitionDate, description, rank, externalIdentifier, agreement, extensions, createdOn, lastModifiedOn, @baseType, @type, @schemaLocation
