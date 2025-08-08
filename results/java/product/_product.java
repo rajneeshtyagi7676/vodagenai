@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Product GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:15:28.152808
+ * Generated at: 2025-08-08T17:15:45.883032
  */
 public class ProductGETTest {
 
@@ -26,14 +26,14 @@ public class ProductGETTest {
 
     
     @Test
-    public void TMF637ProductInventoryManagementresource/productforresponsecode201Created() {
+    public void TMF637ProductInventoryManagementresource/productforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
             
         .when()
             .get("/product")
         .then()
-            .statusCode(201)
+            .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
             .body("id", notNullValue())
