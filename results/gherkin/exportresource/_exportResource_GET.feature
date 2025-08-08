@@ -7,4 +7,6 @@ Scenario: TMF637 Product Inventory Management - resource /exportResource for res
   When I send a POST request to /exportResource
   Then the response status code should be 200
   And the response should contain an ExportJobDefinitionOutput object
-  And the ExportJobDefinitionOutput object should have the optional properties: jobDefinitionId, jobInstanceId
+  And the ExportJobDefinitionOutput object should have the properties: jobDefinitionId, jobInstanceId
+  And the ExportJobDefinitionOutput jobDefinitionId should contain [RESPONSE-jobDefinitionId-PLACEHOLDER]
+  And the ExportJobDefinitionOutput jobInstanceId should contain [RESPONSE-jobInstanceId-PLACEHOLDER]
