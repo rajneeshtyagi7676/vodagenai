@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Creditprofile GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:29:17.491299
+ * Generated at: 2025-08-08T09:46:21.165130
  */
 public class CreditprofileGETTest {
 
@@ -40,9 +40,7 @@ public class CreditprofileGETTest {
             .statusCode(200)
             .body("$", isA(List.class))
             .body("size()", greaterThan(0))
-            .body("id", notNullValue())
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0));
+            .body("id", notNullValue());
     }
         
 
