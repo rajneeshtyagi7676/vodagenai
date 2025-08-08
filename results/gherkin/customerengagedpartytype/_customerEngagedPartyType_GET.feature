@@ -13,6 +13,6 @@ Scenario: TMF629 Customer Management - resource /customerEngagedPartyType for re
   When I send a GET request to /customerEngagedPartyType
   Then the response status code should be 200
   And the response should contain an array of CustomerEngagedPartyType objects
-  And each CustomerEngagedPartyType object should have the required properties: customerEngagedPartyType
-  And each CustomerEngagedPartyType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type
+  And each CustomerEngagedPartyType object should have the required properties: @type
+  And each CustomerEngagedPartyType object should have the optional properties: active, default, fullLabelDisplay, href, selectionDisplay, shortLabelDisplay, customerEngagedPartyType
   And the response header cache-control should contain [RESPONSE-cache-control-PLACEHOLDER]
