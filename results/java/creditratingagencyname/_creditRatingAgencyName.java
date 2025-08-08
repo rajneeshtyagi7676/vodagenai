@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Creditratingagencyname GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:29:28.452596
+ * Generated at: 2025-08-08T09:56:59.574348
  */
 public class CreditratingagencynameGETTest {
 
@@ -40,7 +40,9 @@ public class CreditratingagencynameGETTest {
         .then()
             .statusCode(200)
             .body("$", isA(List.class))
-            .body("size()", greaterThan(0));
+            .body("size()", greaterThan(0))
+            .body("name", notNullValue())
+            .body("name", notNullValue());
     }
         
 
