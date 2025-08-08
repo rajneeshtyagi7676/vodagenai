@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Customer GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:18:06.799694
+ * Generated at: 2025-08-08T08:31:40.432798
  */
 public class CustomerGETTest {
 
@@ -46,7 +46,8 @@ public class CustomerGETTest {
             .body("$", isA(List.class))
             .body("size()", greaterThan(0))
             .body("id", notNullValue())
-            .body("name", notNullValue());
+            .body("name", notNullValue())
+            .body("id", notNullValue());
     }
         
 
