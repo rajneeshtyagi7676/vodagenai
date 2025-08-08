@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /creditRatingAgencyType for resp
   When I send a GET request to /creditRatingAgencyType
   Then the response status code should be 200
   And the response should contain an array of CreditRatingAgencyType objects
+  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
   And each CreditRatingAgencyType object should have the required properties: creditRatingAgencyType
   And each CreditRatingAgencyType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type
-  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
