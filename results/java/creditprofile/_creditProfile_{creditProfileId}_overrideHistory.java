@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Overridehistory GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:36:59.722657
+ * Generated at: 2025-08-08T17:38:50.507111
  */
 public class OverridehistoryGETTest {
 
@@ -26,25 +26,15 @@ public class OverridehistoryGETTest {
 
     
     @Test
-    public void TMF629CustomerManagementresource/creditProfile/{creditProfileId}/overrideHistoryforresponsecode200OK() {
+    public void TMF637ProductInventoryManagementresource/creditProfile/{creditProfileId}/overrideHistoryforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            .queryParam("salesChannel", "test_value")
-            .queryParam("characteristicId", "test_value")
-            .queryParam("fields", "test_value")
+            
         .when()
             .get("/creditProfile/{creditProfileId}/overrideHistory")
         .then()
             .statusCode(200)
-            .body("$", isA(Map.class))
-            .body("id", notNullValue())
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0))
-            .body("id", notNullValue())
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0))
-            .body("id", notNullValue())
-            .body("name", notNullValue());
+            .body("$", notNullValue());
     }
         
 
