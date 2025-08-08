@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Creditratingcharacteristicname GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:36:45.641845
+ * Generated at: 2025-08-08T17:39:00.798190
  */
 public class CreditratingcharacteristicnameGETTest {
 
@@ -25,26 +25,6 @@ public class CreditratingcharacteristicnameGETTest {
     }
 
     
-    @Test
-    public void TMF629CustomerManagementresource/creditRatingCharacteristicNameforresponsecode200OK() {
-        given()
-            .contentType(ContentType.JSON)
-            .queryParam("salesChannel", "test_value")
-            .queryParam("fields", "test_value")
-            .queryParam("include", "test_value")
-            .queryParam("isDefault", "test_value")
-            .queryParam("sort", "test_value")
-            .queryParam("creditRatingCharacteristicName", "test_value")
-        .when()
-            .get("/creditRatingCharacteristicName")
-        .then()
-            .statusCode(200)
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0))
-            .body("name", notNullValue())
-            .body("name", notNullValue());
-    }
-        
 
     // Test data builder helper class
     private static class TestDataBuilder {
