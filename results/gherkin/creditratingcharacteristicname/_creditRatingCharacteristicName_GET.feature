@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /creditRatingCharacteristicName 
   When I send a GET request to /creditRatingCharacteristicName
   Then the response status code should be 200
   And the response should contain an array of CreditRatingCharacteristicName objects
-  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
   And each CreditRatingCharacteristicName object should have the required properties: creditRatingCharacteristicName
-  And each CreditRatingCharacteristicName object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, extensions
+  And each CreditRatingCharacteristicName object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type
+  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
