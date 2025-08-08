@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Addpostaladdress GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:36:41.297342
+ * Generated at: 2025-08-08T17:39:04.330191
  */
 public class AddpostaladdressGETTest {
 
