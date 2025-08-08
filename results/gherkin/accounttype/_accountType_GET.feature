@@ -13,6 +13,6 @@ Scenario: TMF629 Customer Management - resource /accountType for response code 2
   When I send a GET request to /accountType
   Then the response status code should be 200
   And the response should contain an array of AccountType objects
-  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
   And each AccountType object should have the required properties: accountType
   And each AccountType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type
+  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
