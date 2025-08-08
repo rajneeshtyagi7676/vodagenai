@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Exportresource GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T16:59:47.430268
+ * Generated at: 2025-08-08T17:03:26.467441
  */
 public class ExportresourceGETTest {
 
