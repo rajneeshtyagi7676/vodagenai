@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for {customerid} GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T08:17:55.783719
+ * Generated at: 2025-08-08T08:17:58.822101
  */
 public class {customerid}GETTest {
 
@@ -30,14 +30,16 @@ public class {customerid}GETTest {
         given()
             .contentType(ContentType.JSON)
             .queryParam("salesChannel", "test_value")
+            .queryParam("embed", "test_value")
+            .queryParam("retrieveSegment", "test_value")
         .when()
             .get("/customer/{customerId}")
         .then()
             .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("id", notNullValue())
-            .body("name", notNullValue());
+            .body("name", notNullValue())
+            .body("id", notNullValue());
     }
         
 
