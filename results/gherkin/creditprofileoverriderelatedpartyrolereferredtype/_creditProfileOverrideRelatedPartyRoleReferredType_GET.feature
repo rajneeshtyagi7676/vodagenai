@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /creditProfileOverrideRelatedPar
   When I send a GET request to /creditProfileOverrideRelatedPartyRoleReferredType
   Then the response status code should be 200
   And the response should contain an array of CreditProfileOverrideRelatedPartyRoleReferredType objects
+  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
   And each CreditProfileOverrideRelatedPartyRoleReferredType object should have the required properties: creditProfileOverrideRelatedPartyRoleReferredType
   And each CreditProfileOverrideRelatedPartyRoleReferredType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type, creditProfileOverrideRelatedPartyRoleReferredTypeRole, extensions
-  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
