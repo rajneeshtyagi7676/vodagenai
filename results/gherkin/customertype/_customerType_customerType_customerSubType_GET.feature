@@ -5,13 +5,13 @@ Scenario: TMF629 Customer Management - resource /customerType/{customerType}/cus
   And for header Accept-Language is set to [HEADER-ACCEPT-LANGUAGE-PLACEHOLDER]
   And for header If-Modified-Since is set to [HEADER-IF-MODIFIED-SINCE-PLACEHOLDER]
   And valid Bearer authorization token
+  And for path customerType is set to [PATH-CUSTOMERTYPE-PLACEHOLDER]
   And for query salesChannel is set to [QUERY-SALESCHANNEL-PLACEHOLDER]
   And for query fields is set to [QUERY-FIELDS-PLACEHOLDER]
   And for query include is set to [QUERY-INCLUDE-PLACEHOLDER]
   And for query isDefault is set to [QUERY-ISDEFAULT-PLACEHOLDER]
   And for query sort is set to [QUERY-SORT-PLACEHOLDER]
   And for query customerSubType is set to [QUERY-CUSTOMERSUBTYPE-PLACEHOLDER]
-  And for path customerType is set to [PATH-CUSTOMERTYPE-PLACEHOLDER]
   When I send a GET request to /customerType/{customerType}/customerSubType
   Then the response status code should be 200
   And the response should contain an array of CustomerSubType objects
