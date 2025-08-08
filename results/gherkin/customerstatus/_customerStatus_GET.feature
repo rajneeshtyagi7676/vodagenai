@@ -14,6 +14,6 @@ Scenario: TMF629 Customer Management - resource /customerStatus for response cod
   When I send a GET request to /customerStatus
   Then the response status code should be 200
   And the response should contain an array of CustomerStatus objects
-  And each CustomerStatus object should have the required properties: customerStatus
-  And each CustomerStatus object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, '@type', transitionToStatus, statusChangeReason, extensions
+  And each CustomerStatus object should have the required properties: @type
+  And each CustomerStatus object should have the optional properties: active, default, fullLabelDisplay, href, selectionDisplay, shortLabelDisplay, customerStatus, extensions, transitionToStatus
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
