@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Product GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-11T16:23:36.614114
+ * Generated at: 2025-08-11T16:23:42.064374
  */
 public class ProductGETTest {
 
@@ -29,25 +29,15 @@ public class ProductGETTest {
     public void TMF637ProductInventoryManagementresource/productforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            .queryParam("filter", "test_value")
-            .queryParam("replacableProductOfferingId", "test_value")
-            .queryParam("productEnabledByProductId", "test_value")
-            .queryParam("offset", "test_value")
-            .queryParam("limit", "test_value")
-            .queryParam("after", "test_value")
-            .queryParam("searchAfterStrategy", "test_value")
-            .queryParam("calculatePrice", "test_value")
-            .queryParam("calculateTax", "test_value")
-            .queryParam("mask", "test_value")
-            .queryParam("returnTotalCount", "test_value")
+            
         .when()
             .get("/product")
         .then()
             .statusCode(200)
-            .body("$", isA(List.class))
-            .body("size()", greaterThan(0))
+            .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("name", notNullValue());
+            .body("name", notNullValue())
+            .body("id", notNullValue());
     }
         
 
