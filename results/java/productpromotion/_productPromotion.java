@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Productpromotion GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-10T05:48:48.271767
+ * Generated at: 2025-08-11T08:05:36.025280
  */
 public class ProductpromotionGETTest {
 
