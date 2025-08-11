@@ -3,7 +3,7 @@ info:
   description: "This API manages Product Inventory resources. The API enables creating\
     \ a resource in the product inventory.\nThe API also enables retrieving products\
     \ from the product inventory, including their versions and states, their prices,\
-    \ and related parties.\n###### Compliant with TMF API Specifications TMF637-Product\
+    \ and related parties.\n###### Compliant with TMF API Specificationsss TMF637-Product\
     \ Inventory Management-v4.0.0\n
     ASGW release number - 4.0.0.2"
   version: 4.0.1
