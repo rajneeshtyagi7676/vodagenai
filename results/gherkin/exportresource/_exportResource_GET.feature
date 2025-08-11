@@ -5,7 +5,6 @@ Scenario: TMF637 Product Inventory Management - resource /exportResource for res
   And valid Bearer authorization token
   And for body ExportJobDefinition is set to {
     "jobDefinitionId": "pi-product-export-v4",
-    "jobInstanceId": null,
     "operation": "start",
     "resource": "product",
     "topicName": "product-export-topic",
