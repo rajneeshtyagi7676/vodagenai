@@ -9,4 +9,4 @@ Scenario: TMF637 Product Inventory Management - resource /product/{productId}/ca
   When I send a POST request to /product/{productId}/calculateNextPossibleTerminationDate
   Then the response status code should be 200
   And the response should contain a calculatedTerminationDate object
-  And the calculatedTerminationDate object should have the property: productId
+  And the calculatedTerminationDate object should have the property productId
