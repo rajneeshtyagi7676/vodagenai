@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Calculatenextpossibleterminationdate GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-11T18:17:20.833648
+ * Generated at: 2025-08-11T18:28:12.900656
  */
 public class CalculatenextpossibleterminationdateGETTest {
 
