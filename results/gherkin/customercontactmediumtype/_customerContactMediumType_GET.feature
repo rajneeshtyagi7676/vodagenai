@@ -1,11 +1,18 @@
-Feature: TMF637 Product Inventory Management - resource /customerContactMediumType for response code 200 OK
+Feature: TMF629 Customer Management - resource /customerContactMediumType for response code 200 OK
 
-Scenario: TMF637 Product Inventory Management - resource /customerContactMediumType for response code 200 OK
-    Given with the server api.test.asgw.sol-vf.de for api /productInventoryManagement/v4 and the resource /customerContactMediumType
-    And for header Accept is set to [HEADER-ACCEPT-PLACEHOLDER]
-    And for header Content-Type is set to [HEADER-CONTENT-TYPE-PLACEHOLDER]
-    And valid Bearer authorization token
-    When I send a GET request to /customerContactMediumType
-    Then the response status code should be 200
-    And the response should contain customer contact medium type information
-    And the response header Content-Type should contain [RESPONSE-Content-Type-PLACEHOLDER]
+Scenario: TMF629 Customer Management - resource /customerContactMediumType for response code 200 OK
+  Given with the server api.test.asgw.sol-vf.de for api /customerManagement/v1 and the resource /customerContactMediumType
+  And for header Accept-Language is set to [HEADER-ACCEPT-LANGUAGE-PLACEHOLDER]
+  And for header If-Modified-Since is set to [HEADER-IF-MODIFIED-SINCE-PLACEHOLDER]
+  And valid Bearer authorization token
+  And for query salesChannel is set to [QUERY-SALESCHANNEL-PLACEHOLDER]
+  And for query fields is set to [QUERY-FIELDS-PLACEHOLDER]
+  And for query include is set to [QUERY-INCLUDE-PLACEHOLDER]
+  And for query isDefault is set to [QUERY-ISDEFAULT-PLACEHOLDER]
+  And for query customerContactMediumType is set to [QUERY-CUSTOMERCONTACTMEDIUMTYPE-PLACEHOLDER]
+  When I send a GET request to /customerContactMediumType
+  Then the response status code should be 200
+  And the response should contain an array of CustomerContactMediumType objects
+  And each CustomerContactMediumType object should have the required properties: @type
+  And each CustomerContactMediumType object should have the optional properties: active, default, fullLabelDisplay, href, selectionDisplay, shortLabelDisplay, customerContactMediumType, mediumType
+  And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
