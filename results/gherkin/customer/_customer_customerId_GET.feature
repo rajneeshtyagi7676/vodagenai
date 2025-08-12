@@ -12,5 +12,5 @@ Scenario: TMF629 Customer Management - resource /customer/{customerId} for respo
   Then the response status code should be 200
   And the response should contain a Customer object
   And the Customer object should have the required properties: id, name, status
-  And the Customer object should have the optional properties: description, customerType, customerSubType, engagedParty, account, characteristic, contactMedium, creditProfile, agreement, relatedParty, validFor, paymentMethod, statusDate, statusReason, rank, createdOn, lastModifiedOn, acquisitionDate, extensions, externalIdentifier
+  And the Customer object should have the optional properties: customerType, customerSubType, description, engagedParty, account, characteristic, contactMedium, creditProfile, agreement, relatedParty, validFor, paymentMethod, statusDate, statusReason, rank, acquisitionDate, createdOn, lastModifiedOn, extensions, externalIdentifier, @baseType, @schemaLocation, @type
   And the response header Etag should contain [RESPONSE-ETAG-PLACEHOLDER]
