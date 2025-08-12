@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Customerpaymentmethodtype GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-12T07:50:14.080130
+ * Generated at: 2025-08-12T08:54:47.966642
  */
 public class CustomerpaymentmethodtypeGETTest {
 
