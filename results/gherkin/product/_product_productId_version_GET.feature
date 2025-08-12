@@ -2,7 +2,7 @@ Feature: TMF637 Product Inventory Management - resource /product/{productId}/ver
 
 Scenario: TMF637 Product Inventory Management - resource /product/{productId}/version for response code 200 OK
   Given with the server api.test.asgw.sol-vf.de for api /productInventoryManagement/v4 and the resource /product/{productId}/version
-  And for header Accept-Language is set to [HEADER-Accept-Language-PLACEHOLDER]
+  And for header Accept-Language is set to [HEADER-ACCEPT-LANGUAGE-PLACEHOLDER]
   And valid Bearer authorization token
   And for path productId is set to [PATH-productId-PLACEHOLDER]
   And for query dateFrom is set to [QUERY-dateFrom-PLACEHOLDER]
