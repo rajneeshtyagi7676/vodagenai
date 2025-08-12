@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Customer GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:39:04.937911
+ * Generated at: 2025-08-12T07:50:18.281712
  */
 public class CustomerGETTest {
 
@@ -26,18 +26,19 @@ public class CustomerGETTest {
 
     
     @Test
-    public void TMF637ProductInventoryManagementresource/customerforresponsecode200OK() {
+    public void TMF629CustomerManagementresource/customerforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            
+            .queryParam("salesChannel", "test_value")
+            .queryParam("excludeEntityCreation", "test_value")
         .when()
             .get("/customer")
         .then()
             .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("name", notNullValue())
-            .body("id", notNullValue());
+            .body("id", notNullValue())
+            .body("name", notNullValue());
     }
         
 
