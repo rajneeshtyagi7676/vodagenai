@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Addrelatedparty GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-12T07:50:38.332965
+ * Generated at: 2025-08-12T08:54:40.828105
  */
 public class AddrelatedpartyGETTest {
 
@@ -36,9 +36,8 @@ public class AddrelatedpartyGETTest {
             .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("id", notNullValue())
             .body("name", notNullValue())
-            .body("$", isA(Map.class));
+            .body("id", notNullValue());
     }
         
 
