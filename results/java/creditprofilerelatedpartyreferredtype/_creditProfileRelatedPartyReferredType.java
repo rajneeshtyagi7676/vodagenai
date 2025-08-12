@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Creditprofilerelatedpartyreferredtype GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:39:03.206397
+ * Generated at: 2025-08-12T07:50:36.149226
  */
 public class CreditprofilerelatedpartyreferredtypeGETTest {
 
@@ -26,15 +26,21 @@ public class CreditprofilerelatedpartyreferredtypeGETTest {
 
     
     @Test
-    public void TMF637ProductInventoryManagementresource/creditProfileRelatedPartyReferredTypeforresponsecode200OK() {
+    public void TMF629CustomerManagementresource/creditProfileRelatedPartyReferredTypeforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            
+            .queryParam("salesChannel", "test_value")
+            .queryParam("fields", "test_value")
+            .queryParam("include", "test_value")
+            .queryParam("isDefault", "test_value")
+            .queryParam("sort", "test_value")
+            .queryParam("creditProfileRelatedPartyReferredType", "test_value")
         .when()
             .get("/creditProfileRelatedPartyReferredType")
         .then()
             .statusCode(200)
-            .body("$", notNullValue());
+            .body("$", isA(List.class))
+            .body("size()", greaterThan(0));
     }
         
 
