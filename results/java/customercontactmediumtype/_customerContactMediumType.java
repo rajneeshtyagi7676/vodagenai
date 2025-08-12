@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Customercontactmediumtype GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:39:22.904180
+ * Generated at: 2025-08-12T07:50:33.436473
  */
 public class CustomercontactmediumtypeGETTest {
 
@@ -26,15 +26,20 @@ public class CustomercontactmediumtypeGETTest {
 
     
     @Test
-    public void TMF637ProductInventoryManagementresource/customerContactMediumTypeforresponsecode200OK() {
+    public void TMF629CustomerManagementresource/customerContactMediumTypeforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            
+            .queryParam("salesChannel", "test_value")
+            .queryParam("fields", "test_value")
+            .queryParam("include", "test_value")
+            .queryParam("isDefault", "test_value")
+            .queryParam("customerContactMediumType", "test_value")
         .when()
             .get("/customerContactMediumType")
         .then()
             .statusCode(200)
-            .body("$", notNullValue());
+            .body("$", isA(List.class))
+            .body("size()", greaterThan(0));
     }
         
 
