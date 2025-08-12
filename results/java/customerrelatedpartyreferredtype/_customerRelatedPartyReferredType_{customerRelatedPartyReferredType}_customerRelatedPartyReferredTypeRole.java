@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Customerrelatedpartyreferredtyperole GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:39:24.944047
+ * Generated at: 2025-08-12T07:50:17.686379
  */
 public class CustomerrelatedpartyreferredtyperoleGETTest {
 
@@ -26,15 +26,21 @@ public class CustomerrelatedpartyreferredtyperoleGETTest {
 
     
     @Test
-    public void TMF637ProductInventoryManagementresource/customerRelatedPartyReferredType/{customerRelatedPartyReferredType}/customerRelatedPartyReferredTypeRoleforresponsecode200OK() {
+    public void TMF629CustomerManagementresource/customerRelatedPartyReferredType/{customerRelatedPartyReferredType}/customerRelatedPartyReferredTypeRoleforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            
+            .queryParam("salesChannel", "test_value")
+            .queryParam("fields", "test_value")
+            .queryParam("include", "test_value")
+            .queryParam("isDefault", "test_value")
+            .queryParam("sort", "test_value")
+            .queryParam("customerRelatedPartyReferredTypeRole", "test_value")
         .when()
             .get("/customerRelatedPartyReferredType/{customerRelatedPartyReferredType}/customerRelatedPartyReferredTypeRole")
         .then()
             .statusCode(200)
-            .body("$", notNullValue());
+            .body("$", isA(List.class))
+            .body("size()", greaterThan(0));
     }
         
 
