@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Characteristicvaluetype GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:38:55.200744
+ * Generated at: 2025-08-12T07:50:16.522059
  */
 public class CharacteristicvaluetypeGETTest {
 
@@ -26,15 +26,21 @@ public class CharacteristicvaluetypeGETTest {
 
     
     @Test
-    public void TMF637ProductInventoryManagementresource/characteristicValueTypeforresponsecode200OK() {
+    public void TMF629CustomerManagementresource/characteristicValueTypeforresponsecode200OK() {
         given()
             .contentType(ContentType.JSON)
-            
+            .queryParam("salesChannel", "test_value")
+            .queryParam("fields", "test_value")
+            .queryParam("include", "test_value")
+            .queryParam("isDefault", "test_value")
+            .queryParam("sort", "test_value")
+            .queryParam("characteristicValueType", "test_value")
         .when()
             .get("/characteristicValueType")
         .then()
             .statusCode(200)
-            .body("$", notNullValue());
+            .body("$", isA(List.class))
+            .body("size()", greaterThan(0));
     }
         
 
