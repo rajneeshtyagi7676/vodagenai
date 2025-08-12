@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Override GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T17:38:58.141024
+ * Generated at: 2025-08-12T07:50:19.726776
  */
 public class OverrideGETTest {
 
