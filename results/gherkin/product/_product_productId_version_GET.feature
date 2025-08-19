@@ -4,12 +4,12 @@ Scenario: TMF637 Product Inventory Management - resource /product/{productId}/ve
   Given with the server api.test.asgw.sol-vf.de for api /productInventoryManagement/v4 and the resource /product/{productId}/version
   And for header Accept-Language is set to [HEADER-ACCEPT-LANGUAGE-PLACEHOLDER]
   And valid Bearer authorization token
-  And for path productId is set to [PATH-PRODUCTID-PLACEHOLDER]
   And for query dateFrom is set to [QUERY-DATEFROM-PLACEHOLDER]
   And for query dateTo is set to [QUERY-DATETO-PLACEHOLDER]
   And for query offset is set to [QUERY-OFFSET-PLACEHOLDER]
   And for query limit is set to [QUERY-LIMIT-PLACEHOLDER]
   And for query mask is set to [QUERY-MASK-PLACEHOLDER]
+  And for path productId is set to [PATH-PRODUCTID-PLACEHOLDER]
   When I send a GET request to /product/{productId}/version
   Then the response status code should be 200
   And the response should contain an array of Product objects
