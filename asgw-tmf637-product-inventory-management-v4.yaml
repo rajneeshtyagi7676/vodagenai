@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "This API manages Product Inventory resources. The API enables creating\
+  description: "This API manages Product Inventory resources. The API enabless creating\
     \ a resource in the product inventory.\nThe API also enables retrieving products\
     \ from the product inventory, including their versions and states, their prices,\
     \ and related parties.\n###### Compliant with TMF API Specification TMF637-Product\
