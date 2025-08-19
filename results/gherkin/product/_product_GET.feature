@@ -18,7 +18,7 @@ Scenario: TMF637 Product Inventory Management - resource /product for response c
   When I send a GET request to /product
   Then the response status code should be 200
   And the response should contain an array of Product objects
-  And each Product object should have the optional properties: id, href, name, description, isBundle, isCustomerVisible, productSerialNumber, startDate, terminationDate, status, activationDate, orderDate, lastUpdate, creationDate, version, versionObsolete, pathToRoot, parentId, rootProductId, primaryProductId, previousStatus, statusChangeDate, contractCategory, quantity, rootProductOfferingId
+  And each Product object should have the optional properties: id, href, name, description, isBundle, isCustomerVisible, productSerialNumber, startDate, terminationDate, status, activationDate, orderDate, lastUpdate, creationDate, version, versionObsolete, pathToRoot, parentId, rootProductId, primaryProductId, previousStatus, statusChangeDate, quantity, contractCategory, rootProductOfferingId
   And the response header X-Pagination-Total-Pages should contain [RESPONSE-X-Pagination-Total-Pages-PLACEHOLDER]
   And the response header X-Result-Count should contain [RESPONSE-X-Result-Count-PLACEHOLDER]
   And the response header X-Total-Count should contain [RESPONSE-X-Total-Count-PLACEHOLDER]
