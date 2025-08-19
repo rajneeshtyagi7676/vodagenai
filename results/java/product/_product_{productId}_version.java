@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Version GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-19T07:01:06.602174
+ * Generated at: 2025-08-19T09:09:11.334547
  */
 public class VersionGETTest {
 
