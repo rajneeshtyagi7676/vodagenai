@@ -13,6 +13,6 @@ Scenario: TMF629 Customer Management - resource /customerPaymentMethodReferredTy
   When I send a GET request to /customerPaymentMethodReferredType
   Then the response status code should be 200
   And the response should contain an array of CustomerPaymentMethodReferredType objects
+  And each CustomerPaymentMethodReferredType object should have the required properties: @type
+  And each CustomerPaymentMethodReferredType object should have the optional properties: active, default, fullLabelDisplay, href, selectionDisplay, shortLabelDisplay, customerPaymentMethodReferredType
   And the response header cache-control should contain [RESPONSE-CACHE-CONTROL-PLACEHOLDER]
-  And each CustomerPaymentMethodReferredType object should have the required properties: customerPaymentMethodReferredType
-  And each CustomerPaymentMethodReferredType object should have the optional properties: href, shortLabelDisplay, fullLabelDisplay, selectionDisplay, active, default, @type
