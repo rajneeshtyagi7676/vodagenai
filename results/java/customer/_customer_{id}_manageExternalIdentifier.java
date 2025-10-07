@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for Manageexternalidentifier GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-08T09:56:53.054881
+ * Generated at: 2025-10-07T10:04:50.991374
  */
 public class ManageexternalidentifierGETTest {
 
@@ -36,8 +36,8 @@ public class ManageexternalidentifierGETTest {
             .statusCode(200)
             .body("$", isA(Map.class))
             .body("id", notNullValue())
-            .body("name", notNullValue())
-            .body("id", notNullValue());
+            .body("id", notNullValue())
+            .body("name", notNullValue());
     }
         
 
