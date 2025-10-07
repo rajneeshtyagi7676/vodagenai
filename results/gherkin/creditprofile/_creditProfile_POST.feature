@@ -11,5 +11,5 @@ Scenario: TMF629 Customer Management - resource /creditProfile for response code
     Then the response status code should be 200
     And the response should contain a CreditProfile object
     And the CreditProfile object should have the required properties: id
-    And the CreditProfile object should have the optional properties: creditProfileDate, creditRiskRating, creditScore, lastUpdate, status, validFor, href, externalIdentifier, characteristic, creditRating, relatedParty, relatedCreditParty, partyPrivacyProfile
+    And the CreditProfile object should have the optional properties: characteristic, creditProfileDate, creditRating, creditRiskRating, creditScore, externalIdentifier, href, lastUpdate, partyPrivacyProfile, relatedCreditParty, relatedParty, relatedPartyRole, status, validFor
     And the response header Etag should contain [RESPONSE-ETAG-PLACEHOLDER]
