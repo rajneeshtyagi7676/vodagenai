@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Generated API tests for {creditprofileid} GET endpoint
  * Based on Gherkin scenarios
- * Generated at: 2025-08-12T08:54:40.387776
+ * Generated at: 2025-10-07T10:04:53.447437
  */
 public class {creditprofileid}GETTest {
 
