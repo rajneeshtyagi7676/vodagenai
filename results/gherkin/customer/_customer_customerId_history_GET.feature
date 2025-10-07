@@ -13,6 +13,5 @@ Scenario: TMF629 Customer Management - resource /customer/{customerId}/history f
   Then the response status code should be 200
   And the response should contain an array of HistoryItem objects
   And each HistoryItem object should have the optional properties: id, entity, itemType, modifiedBy, modifiedOn, salesChannel, transactionID, HistoryData
-  And if HistoryData is present, it should contain an array of HistoryData objects
-  And each HistoryData object should have the optional property: value
-  And if entity is present, it should be an EntityRef object with optional properties: id, href, name, @referredType
+  And if present, each entity object should have the properties: id, href, name
+  And if present, each HistoryData array should contain objects with the property: value
