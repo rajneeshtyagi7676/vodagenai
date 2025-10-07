@@ -28,7 +28,7 @@ paths:
     get:
       tags:
       - "Customer"
-      summary: "Retrieve customers based on given filters"
+      summary: "Retrieve customers based on given filter"
       description: "This operation provides an ability to filter Customer based on\
         \ different criteria. \n\n###### TMF Open API compliant        \n\n**Filters\
         \ &#58;**\nSupported filters and filter operations using ?filters? directive\
